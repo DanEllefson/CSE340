@@ -75,9 +75,9 @@ nav ul li a {
 }
 
 /********************************************************/
-/* Basic styling for the title on the main page content */
+/* Basic styling for the title in the main page content */
 /********************************************************/
-#main-title h1 {
+h1 {
   font-size: 1.3em; /* Larger font size for the title */
   font-weight: 800; /* Maximum boldness */
   margin: 0; /* Removes default margin */
@@ -87,7 +87,7 @@ nav ul li a {
 }
 
 /**************************************************************/
-/* Basic styling for the car picture on the main page content */
+/* Basic styling for the car picture in the main page content */
 /**************************************************************/
 .main-image {
   width: 100%;
@@ -95,7 +95,7 @@ nav ul li a {
 }
 
 /******************************************************************/
-/* Basic styling for the translucent box on the main page content */
+/* Basic styling for the translucent box in the main page content */
 /******************************************************************/
 .translucent-box {
   position: absolute;
@@ -112,7 +112,8 @@ nav ul li a {
   list-style-type: none; /* Removes bullet points */
   padding-left: 0; /* Optional: removes default left padding */
   margin: 0; /* Optional: removes default margin */
-  color: blue;
+  color: rgb(10, 159, 185);
+  font-size: 1em;
 }
 
 #box-title {
@@ -120,11 +121,24 @@ nav ul li a {
   font-weight: bold;
 }
 
-#box-details {
-  font-size: 1em;
-}
-
 .translucent-box-image {
   width: 45%;
   height: auto;
+  border: none; /* Ensures there is no border around the image */
+}
+
+/******************************************************************/
+/* Basic styling for the reviews section in the main page content */
+/******************************************************************/
+.main-reviews-items {
+  font-size: 1em;
+  color: #333;
+  margin: 5px 0; /* Adjusts margin to remove space on the sides */
+  padding-left: 0; /* Removes any padding on the left */
+  text-align: left; /* Ensures text is left-aligned */
+  list-style-position: inside; /* Optional: moves bullet points to align with the text */
+}
+
+.main-reviews-items li {
+  margin-bottom: 10px; /* Adds space between each bullet point item */
 }
