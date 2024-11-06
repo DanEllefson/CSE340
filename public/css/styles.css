@@ -1,6 +1,77 @@
+/* Base styles - focus on mobile first */
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+/************************************/
+/* Base styles - assumed for mobile */
+/************************************/
+
+body {
+  font-family: Arial, sans-serif; /* Arial or similar sans-serif font for readability */
+}
+
+/***********************************************/
+/* Basic styling for the mobile navigation bar */
+/***********************************************/
+nav {
+  background-color: #333; /* Dark background for the nav bar */
+  padding: 10px 0; /* Adds padding around the nav items */
+}
+
+nav ul {
+  display: flex; /* Arranges items in a row */
+  justify-content: space-around; /* Evenly spaces out the items */
+  list-style-type: none; /* Removes default bullet points */
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  flex: 1; /* Ensures each nav item takes equal width in the row */
+  text-align: center; /* Centers the text inside each nav item */
+  padding: 10px 0; /* Adds padding for touch-friendly clickability */
+  /*border-bottom: 4px solid #111; /* Thick dark border at the bottom of each item */
+}
+
+nav ul li a {
+  color: white; /* Text color for readability on dark background */
+  text-decoration: none; /* Removes underline from links */
+  font-weight: bold; /* Optional: makes text more prominent */
+}
+
+/***************************************/
+/* Basic styling for the mobile header */
+/***************************************/
+#header {
+  display: flex;
+  justify-content: space-between; /* Positions branding on the left, account on the right */
+  align-items: center; /* Vertically centers the items */
+  padding: 10px 15px;
+  background-color: #fff; /* White background for header */
+  color: #333; /* Darker text color for contrast */
+  margin-bottom: 20px; /* Adds space between header and nav bar */
+}
+
+#branding .brand-link {
+  text-decoration: none; /* Removes underline from link */
+  color: #333; /* Matches the header text color */
+}
+
+#branding .brand-title {
+  font-size: 2.2em; /* Larger font size for "CSE Motors" */
+  font-weight: bold; /* Makes "CSE Motors" bold */
+  margin: 0; /* Removes default margin */
+}
+
+#account .account-link {
+  font-size: 0.9em; /* Slightly smaller than nav bar font size */
+  color: #393737; /* Slightly lighter color for differentiation */
+  text-decoration: none; /* No underline for "My Account" link */
+  position: relative;
+  top: -10px; /* Adjust this value to move the link higher */
 }
