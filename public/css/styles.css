@@ -130,6 +130,10 @@ h1 {
 /******************************************************************/
 /* Basic styling for the reviews section in the main page content */
 /******************************************************************/
+#reviews-title {
+  margin-bottom: -10px;
+}
+
 .main-reviews-items {
   font-size: 1em;
   color: #333;
