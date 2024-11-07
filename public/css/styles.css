@@ -146,3 +146,44 @@ h1 {
 .main-reviews-items li {
   margin-bottom: 10px; /* Adds space between each bullet point item */
 }
+
+
+
+/*******************************************************************/
+/* Basic styling for the upgrades section in the main page content */
+/*******************************************************************/
+#upgrades-title {
+  margin-top: 20px;
+  text-align: left;
+}
+
+/* Container for Upgrade Boxes */
+.upgrades-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates a 2x2 grid */
+  gap: 15px; /* Adds space between boxes */
+  margin-top: 10px;
+  margin-bottom: 20px; /* Space between upgrades section and footer */
+}
+
+/* Individual Upgrade Box Styling */
+.upgrade-box {
+  border: 2px solid black; /* Black border around each box */
+  background-color: lightgreen; /* Light green background */
+  padding: 10px;
+  text-align: center; /* Center-aligns the content inside each box */
+}
+
+/* Image in Upgrade Box */
+.upgrade-box img {
+  width: 100%; /* Makes the image fit the box */
+  height: auto;
+  margin-bottom: 5px; /* Adds a bit of space between the image and link */
+}
+
+/* Link Styling in Upgrade Box */
+.upgrade-box a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
