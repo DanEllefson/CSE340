@@ -169,7 +169,7 @@ h1 {
 /* Individual Upgrade Box Styling */
 .upgrade-box {
   border: 2px solid black; /* Black border around each box */
-  background-color: lightgreen; /* Light green background */
+  background-color: rgb(15, 191, 231); /* Light green background */
   padding: 10px;
 }
 
@@ -182,9 +182,9 @@ h1 {
 
 /* Link Styling Below Each Box */
 .upgrade-link {
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
+  color: blue; /* Sets link color to blue */
+  font-weight: normal; /* Optional: regular font weight for a typical link style */
+  text-decoration: underline; /* Adds underline to mimic standard link appearance */
   margin-top: 5px; /* Adds space between box and link */
-  display: block; /* Ensures the link is centered below the box */
+  display: block; /* Centers link below the box */
 }
