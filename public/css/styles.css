@@ -100,12 +100,14 @@ h1 {
 .translucent-box {
   position: absolute;
   top: 42%;
-  left: 35%;
+  left: 25%;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.5);
   padding: 10px;
   display: inline-block; /* Makes the box fit content size */
   border: none;
+  width: 152px;
+  height: 130px; 
 }
 
 .box-text {
@@ -122,7 +124,7 @@ h1 {
 }
 
 .translucent-box-image {
-  width: 45%;
+  width: 80%;
   height: auto;
   border: none; /* Ensures there is no border around the image */
 }
@@ -152,6 +154,10 @@ h1 {
 /*******************************************************************/
 /* Basic styling for the upgrades section in the main page content */
 /*******************************************************************/
+#upgrades-title {
+  margin-bottom: -10px;
+}
+
 /* Container for Upgrade Boxes */
 .upgrades-container {
   display: grid;
