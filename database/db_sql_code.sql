@@ -1,3 +1,4 @@
+-- Create an enumerated type for the account type since this is not native to PostgreSQL.
 CREATE TYPE public.account_type AS ENUM ('Client', 'Employee', 'Admin');
 ALTER TYPE public.account_type OWNER TO cse340;
 -- Table structure for table 'classification'
@@ -233,4 +234,25 @@ VALUES (
         108247,
         'White',
         5
+    );
+-- Step 4 from Assignment 2: Modify the GM Hummer record.
+UPDATE inventory
+SET inv_description = REPLACE(
+        inv_description,
+        'small interiors',
+        'a huge interior'
+    )
+WHERE inv_make = 'GM'
+    AND inv_model = 'Hummer';
+-- Step 6 from Assignment 2: Update all records in the inventory table to update the file path.
+UPDATE inventory
+SET inv_image = REPLACE(
+        inv_image,
+        '/images/',
+        '/images/vehicles/'
+    ),
+    inv_thumbnail = REPLACE(
+        inv_thumbnail,
+        '/images/',
+        '/images/vehicles/'
     );
