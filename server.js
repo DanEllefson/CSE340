@@ -14,6 +14,7 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute  = require("./routes/inventoryRoute")
 const utilities = require("./utilities")
 const staticRoutes = require("./routes/static");
+const path = require("path");
 
 /* ***********************
  * View Engine and Templates
@@ -25,7 +26,8 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(static)
+// Middleware (static files, etc.)
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(staticRoutes);
 
@@ -33,7 +35,7 @@ app.use(staticRoutes);
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
-app.use("/inv", inventoryRoute)
+app.use("/inv", utilities.handleErrors(inventoryRoute));
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -68,3 +70,5 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+
+module.exports = app;
