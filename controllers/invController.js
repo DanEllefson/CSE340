@@ -32,10 +32,10 @@ invCont.buildDetailByInventoryId = async function (req, res, next) {
     if (!vehicleData) {
       return res.status(404).send("Vehicle not found.");
     }
-    const detailViewHTML = await utilities.buildVehicleDetailView(vehicleData); // Updated to use Util prefix
-    const nav = await utilities.getNav(); // Updated function name to getNav
+    const detailViewHTML = await utilities.buildVehicleDetailView(vehicleData);
+    const nav = await utilities.getNav();
     res.render("inventory/detail", {
-      title: `${vehicleData.make} ${vehicleData.model}`,
+      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       nav,
       detailViewHTML,
     });
