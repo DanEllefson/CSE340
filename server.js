@@ -13,6 +13,7 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute  = require("./routes/inventoryRoute")
 const utilities = require("./utilities")
+const staticRoutes = require("./routes/static");
 
 /* ***********************
  * View Engine and Templates
@@ -25,6 +26,8 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 app.use(static)
+
+app.use(staticRoutes);
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
