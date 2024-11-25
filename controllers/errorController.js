@@ -1,8 +1,8 @@
 const errorCont = {};
 
-/******************************
+/* ***************************
  *  Generate Intentional Error
- ******************************/
+ * ************************** */
 errorCont.generateError = (req, res, next) => {
   try {
     // Intentionally cause a runtime error
