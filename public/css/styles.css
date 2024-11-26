@@ -301,6 +301,50 @@ footer a {
 
 
 /********************************/
+/* Login Page */
+/********************************/
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  margin-top: 10px;
+}
+
+.login-form input {
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.login-form button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.flash-message {
+  margin: 15px auto;
+  padding: 10px;
+  background-color: #ffc107;
+  color: #212529;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.register-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+/********************************/
 /* Viewport for larger screens  */
 /********************************/
 @media (min-width: 769px) {   
