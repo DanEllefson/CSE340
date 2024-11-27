@@ -4,12 +4,12 @@
   <!-- Flash Message -->
   <div class="flash-message">
     <%- messages() %>
-    <% if (errors) { %>
+    <% if (errors && errors.length > 0) { %>
       <ul class="notice">
-    <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-    <%  }) %>
-    </ul>
+        <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
     <% } %>
   </div>
 
