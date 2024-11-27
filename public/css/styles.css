@@ -373,6 +373,26 @@ footer a {
   cursor: pointer;
 }
 
+.required {
+  color: red;
+  font-weight: bold;
+}
+
+.form-instructions {
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+input.error {
+  border-color: red;
+}
+
+input.error + span {
+  color: red;
+  font-size: 0.8em;
+}
+
 
 /********************************/
 /* Viewport for larger screens  */

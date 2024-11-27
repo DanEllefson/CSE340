@@ -1,6 +1,10 @@
 <main>
   <h1><%= title %></h1>
 
+  <p class="form-instructions">
+    All fields marked with <span class="required">*</span> are required.
+  </p>
+
   <!-- Flash Message -->
   <div class="flash-message">
     <%- messages() %>
@@ -8,25 +12,29 @@
 
   <!-- Registration Form -->
   <form action="/account/register" method="POST" class="register-form">
-    <label for="firstName">First Name:</label>
+    <label for="firstName">First Name: <span class="required">*</span></label>
     <input type="text" id="firstName" name="firstName" required value="<%= typeof firstName !== 'undefined' ? firstName : '' %>">
+    <span></span>
 
-    <label for="lastName">Last Name:</label>
+    <label for="lastName">Last Name: <span class="required">*</span></label>
     <input type="text" id="lastName" name="lastName" required value="<%= typeof lastName !== 'undefined' ? lastName : '' %>">
+    <span></span>
 
-    <label for="email">Email Address:</label>
+    <label for="email">Email Address: <span class="required">*</span></label>
     <input type="email" id="email" name="email" required value="<%= typeof email !== 'undefined' ? email : '' %>">
+    <span></span>
 
-    <label for="password">Password:</label>
+    <label for="password">Password: <span class="required">*</span></label>
     <input
       type="password"
       id="password"
       name="password"
       required
-      pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}"
+      pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{12,}"
       title="Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character."
     >
     <button type="button" id="togglePassword">Show/Hide Password</button>
+    <span></span>
 
     <button type="submit">Register</button>
   </form>
@@ -39,5 +47,20 @@
   togglePassword.addEventListener('click', () => {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
+  });
+</script>
+
+<script>
+  document.querySelectorAll('input[required]').forEach((input) => {
+    input.addEventListener('blur', (event) => {
+      const field = event.target;
+      if (!field.value) {
+        field.classList.add('error');
+        field.nextElementSibling.textContent = 'This field is required.';
+      } else {
+        field.classList.remove('error');
+        field.nextElementSibling.textContent = '';
+      }
+    });
   });
 </script>
