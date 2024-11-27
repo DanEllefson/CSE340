@@ -393,6 +393,30 @@ input.error + span {
   font-size: 0.8em;
 }
 
+#togglePassword {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+#togglePassword:focus,
+#togglePassword:hover {
+  outline: none;
+  background-color: #0056b3; /* Darker blue on hover/focus */
+}
+
+#togglePassword.error {
+  background-color: #dc3545; /* Optional: Change color to indicate error */
+  color: white;
+  font-size: 1rem; /* Maintain consistent text size */
+}
+
 
 /********************************/
 /* Viewport for larger screens  */
