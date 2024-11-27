@@ -345,6 +345,36 @@ footer a {
 
 
 /********************************/
+/* Register Page                */
+/********************************/
+.register-form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form label {
+  margin-top: 10px;
+}
+
+.register-form input {
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.register-form button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+/********************************/
 /* Viewport for larger screens  */
 /********************************/
 @media (min-width: 769px) {   
