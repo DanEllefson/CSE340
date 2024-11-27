@@ -110,20 +110,19 @@ validate.loginRules = () => {
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkLoginData = async (req, res, next) => {
-  const { account_email } = req.body
-  let errors = []
-  errors = validationResult(req)
+  const { account_email } = req.body;
+  let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
+    let nav = await utilities.getNav();
     res.render("account/login", {
-      errors,
+      errors: errors.array(), // Convert to an array for EJS
       title: "Login",
       nav,
-      account_email,
-    })
-    return
+      account_email, // Sticky form value
+    });
+    return;
   }
-  next()
-}
+  next();
+};
 
 module.exports = validate

@@ -5,12 +5,15 @@
   <div class="flash-message">
     <%- messages() %>
     <% if (errors && errors.length > 0) { %>
-      <ul class="notice">
-        <% errors.forEach(error => { %>
-          <li><%= error.msg %></li>
-        <% }); %>
-      </ul>
+      <div class="error-message">
+        <ul>
+          <% errors.forEach(function (error) { %>
+            <li><%= error.msg %></li>
+          <% }); %>
+        </ul>
+      </div>
     <% } %>
+    
   </div>
 
   <!-- Login Form -->
