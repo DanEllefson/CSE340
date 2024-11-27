@@ -18,7 +18,14 @@
     <input type="email" id="email" name="email" required value="<%= typeof email !== 'undefined' ? email : '' %>">
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}">
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}"
+      title="Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+    >
     <button type="button" id="togglePassword">Show/Hide Password</button>
 
     <button type="submit">Register</button>
