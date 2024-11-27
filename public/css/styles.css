@@ -418,6 +418,26 @@ input.error + span {
   font-size: 1rem;
 }
 
+/* Invalid Input Styling */
+input:required:invalid {
+  background-color: #ffe6e6; /* Light red */
+  border-color: red;
+}
+
+/* Valid Input Styling */
+input:required:valid {
+  background-color: #e6ffe6; /* Light green */
+  border-color: green;
+}
+
+input {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+input::placeholder {
+  color: #888; /* Light gray */
+}
+
 
 /********************************/
 /* Viewport for larger screens  */

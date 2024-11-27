@@ -48,7 +48,7 @@
       id="account_password"
       name="account_password"
       required
-      pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{12,}"
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
       title="Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character."
     >
     <span class="validation-message"></span>
@@ -62,7 +62,7 @@
   document.querySelectorAll('input[required]').forEach((input) => {
     input.addEventListener('blur', (event) => {
       const field = event.target;
-      const validationMessage = field.nextElementSibling; // This targets the span
+      const validationMessage = field.nextElementSibling;
 
       if (validationMessage && validationMessage.classList.contains('validation-message')) {
         if (!field.value) {
