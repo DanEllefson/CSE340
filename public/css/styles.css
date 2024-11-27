@@ -371,6 +371,7 @@ footer a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .required {
@@ -402,19 +403,19 @@ input.error + span {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
 }
 
 #togglePassword:focus,
 #togglePassword:hover {
   outline: none;
-  background-color: #0056b3; /* Darker blue on hover/focus */
+  background-color: #0056b3;
 }
 
 #togglePassword.error {
-  background-color: #dc3545; /* Optional: Change color to indicate error */
+  background-color: #dc3545;
   color: white;
-  font-size: 1rem; /* Maintain consistent text size */
+  font-size: 1rem;
 }
 
 
