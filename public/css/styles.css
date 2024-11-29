@@ -366,6 +366,26 @@ ul li a:hover {
 }
 
 
+/***********************/
+/* Classification Page */
+/***********************/
+.classification-form .error {
+  border-color: red;
+}
+
+.classification-form .validation-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Button Placement */
+.classification-form button {
+  margin-top: 1em;
+}
+
+
 /********************************/
 /* Register Page                */
 /********************************/

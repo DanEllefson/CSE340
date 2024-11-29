@@ -12,19 +12,19 @@
     </div>
   <% } %>
 
-<!-- Error Display -->
-<% if (errors && errors.length > 0) { %>
-  <div class="error-message">
-    <ul>
-      <% errors.forEach(function (error) { %>
-        <li><%= error.msg %></li>
-      <% }); %>
-    </ul>
-  </div>
-<% } %>
+  <!-- Error Display -->
+  <% if (errors && errors.length > 0) { %>
+    <div class="error-message">
+      <ul>
+        <% errors.forEach(function (error) { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
 
   <!-- Add Classification Form -->
-  <form action="/inv/add-classification" method="post" class="add-classification-form">
+  <form action="/inv/add-classification" method="post" class="classification-form">
     <label for="classification_name">Classification Name:</label>
     <input
       type="text"
@@ -36,26 +36,27 @@
       value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
     >
     <span class="validation-message"></span>
-
     <button type="submit">Add Classification</button>
   </form>
 </main>
 
 <script>
-  document.querySelectorAll('input[required]').forEach((input) => {
-    input.addEventListener('blur', (event) => {
-      const field = event.target;
-      const validationMessage = field.nextElementSibling;
+  document.querySelector('.classification-form').addEventListener('submit', (event) => {
+    const classificationInput = document.getElementById('classification_name');
+    const errorMessage = classificationInput.nextElementSibling;
 
-      if (validationMessage && validationMessage.classList.contains('validation-message')) {
-        if (!field.value) {
-          validationMessage.textContent = 'This field is required.';
-        } else if (!field.checkValidity()) {
-          validationMessage.textContent = field.title;
-        } else {
-          validationMessage.textContent = '';
-        }
-      }
-    });
+    // Clear previous error message
+    errorMessage.textContent = '';
+
+    // Validate input
+    const value = classificationInput.value.trim();
+    if (!/^[a-zA-Z0-9]+$/.test(value)) {
+      event.preventDefault();
+      classificationInput.classList.add('error');
+      errorMessage.textContent = 'Classification name must be alphanumeric without spaces or special characters.';
+      classificationInput.focus();
+    } else {
+      classificationInput.classList.remove('error');
+    }
   });
 </script>
