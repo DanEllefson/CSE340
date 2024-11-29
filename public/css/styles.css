@@ -344,6 +344,28 @@ footer a {
 }
 
 
+/***************************/
+/* Management Page         */
+/***************************/
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 10px 0;
+}
+
+ul li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+ul li a:hover {
+  text-decoration: underline;
+}
+
+
 /********************************/
 /* Register Page                */
 /********************************/

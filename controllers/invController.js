@@ -44,4 +44,25 @@ invCont.buildDetailByInventoryId = async function (req, res, next) {
   }
 };
 
+/* ***************************
+ *  Render Inventory Management View
+ * ************************** */
+invCont.managementView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+
+    // Set a test flash message
+    req.flash("notice", "Test flash message for Inventory Management!");
+
+    // Render the view
+    res.render("inventory/management", {
+      title: "Inventory Management",
+      nav,
+      messages: req.flash("notice"),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = invCont;
