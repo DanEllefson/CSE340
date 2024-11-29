@@ -1,16 +1,17 @@
 const pool = require("../database/")
+const invModel = {};
 
 /* ***************************
  *  Get all classification data
  * ************************** */
-async function getClassifications(){
+invModel.getClassifications = async function () {
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
-async function getInventoryByClassificationId(classification_id) {
+invModel.getInventoryByClassificationId = async function (classification_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i 
@@ -25,10 +26,10 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-/* ***************************
+/*****************************
  *  Get vehicle details by ID
- * ************************** */
-async function getInventoryById(inventoryId) {
+ *****************************/
+invModel.getInventoryById = async function (inventoryId) {
   try {
     const db = require("../database/index"); // Assuming a db module exists for database queries
     const sql = "SELECT * FROM inventory WHERE inv_id = $1";
@@ -40,4 +41,18 @@ async function getInventoryById(inventoryId) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById};
+/*************************
+ *  Insert classification
+ *************************/
+invModel.addClassification = async function (classification_name) {
+  try {
+    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *";
+    const result = await pool.query(sql, [classification_name]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error inserting classification:", error.message);
+    throw error;
+  }
+};
+
+module.exports = invModel;

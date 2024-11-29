@@ -3,9 +3,9 @@ const utilities = require("../utilities/");
 
 const invCont = {};
 
-/* ***************************
+/******************************************
  *  Build inventory by classification view
- * ************************** */
+ ******************************************/
 invCont.buildByClassificationId = async function (req, res, next) {
   try {
     const classification_id = req.params.classificationId;
@@ -22,9 +22,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
   }
 };
 
-/* ***************************
+/*******************************
  *  Build inventory detail view
- * ************************** */
+ *******************************/
 invCont.buildDetailByInventoryId = async function (req, res, next) {
   try {
     const inventoryId = req.params.inventoryId;
@@ -44,22 +44,60 @@ invCont.buildDetailByInventoryId = async function (req, res, next) {
   }
 };
 
-/* ***************************
+/************************************
  *  Render Inventory Management View
- * ************************** */
+ ************************************/
 invCont.managementView = async function (req, res, next) {
   try {
     const nav = await utilities.getNav();
-
-    // Set a test flash message
-    req.flash("notice", "Test flash message for Inventory Management!");
-
-    // Render the view
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
       messages: req.flash("notice"),
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/***************************
+ *  Add Classification View
+ ***************************/
+invCont.addClassificationView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    res.render("inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      messages: req.flash("notice"),
+      errors: [],
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/******************************************
+ *  Add New Classification to the Database
+ ******************************************/
+invCont.addClassification = async function (req, res, next) {
+  try {
+    const { classification_name } = req.body;
+    const insertResult = await invModel.addClassification(classification_name);
+
+    if (insertResult) {
+      req.flash("notice", `The classification "${classification_name}" was successfully added.`);
+      return res.redirect("/inv/");
+    } else {
+      req.flash("notice", "Failed to add classification.");
+      return res.status(400).render("inventory/add-classification", {
+        title: "Add Classification",
+        nav: await utilities.getNav(),
+        messages: req.flash("notice"),
+        errors: null,
+        classification_name,
+      });
+    }
   } catch (error) {
     next(error);
   }

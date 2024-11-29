@@ -1,0 +1,61 @@
+<main>
+  <h1>Add New Classification</h1>
+
+  <p class="form-instructions">
+    Classification names cannot contain spaces or special characters.
+  </p>
+
+  <!-- Flash Messages -->
+  <% if (typeof messages !== "undefined" && messages.length > 0) { %>
+    <div class="flash-message">
+      <%- messages %>
+    </div>
+  <% } %>
+
+<!-- Error Display -->
+<% if (errors && errors.length > 0) { %>
+  <div class="error-message">
+    <ul>
+      <% errors.forEach(function (error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>
+
+  <!-- Add Classification Form -->
+  <form action="/inv/add-classification" method="post" class="add-classification-form">
+    <label for="classification_name">Classification Name:</label>
+    <input
+      type="text"
+      id="classification_name"
+      name="classification_name"
+      required
+      pattern="^[a-zA-Z0-9]+$"
+      title="Classification name must be alphanumeric without spaces or special characters."
+      value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
+    >
+    <span class="validation-message"></span>
+
+    <button type="submit">Add Classification</button>
+  </form>
+</main>
+
+<script>
+  document.querySelectorAll('input[required]').forEach((input) => {
+    input.addEventListener('blur', (event) => {
+      const field = event.target;
+      const validationMessage = field.nextElementSibling;
+
+      if (validationMessage && validationMessage.classList.contains('validation-message')) {
+        if (!field.value) {
+          validationMessage.textContent = 'This field is required.';
+        } else if (!field.checkValidity()) {
+          validationMessage.textContent = field.title;
+        } else {
+          validationMessage.textContent = '';
+        }
+      }
+    });
+  });
+</script>
