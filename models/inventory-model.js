@@ -55,4 +55,23 @@ invModel.addClassification = async function (classification_name) {
   }
 };
 
+/************************
+ *  Insert new inventory
+ ************************/
+invModel.addInventory = async function (inventory) {
+  const { classification_id, inv_make, inv_model, inv_year, inv_price, inv_description } = inventory;
+  try {
+    const sql = `
+      INSERT INTO inventory
+      (classification_id, inv_make, inv_model, inv_year, inv_price, inv_description)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
+    `;
+    const result = await pool.query(sql, [classification_id, inv_make, inv_model, inv_year, inv_price, inv_description]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error adding inventory:", error.message);
+    throw error;
+  }
+};
+
 module.exports = invModel;

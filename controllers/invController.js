@@ -103,4 +103,57 @@ invCont.addClassification = async function (req, res, next) {
   }
 };
 
+/**********************
+ *  Add Inventory View
+ **********************/
+invCont.addInventoryView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    const classificationDropdown = await utilities.buildClassificationList();
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory Item",
+      nav,
+      classificationDropdown,
+      messages: req.flash("notice"),
+      errors: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/*********************************
+ *  Add Inventory to the Database
+ *********************************/
+invCont.addInventory = async function (req, res, next) {
+  try {
+    const { classification_id, inv_make, inv_model, inv_year, inv_price, inv_description } = req.body;
+    const insertResult = await invModel.addInventory({
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      inv_description,
+    });
+
+    if (insertResult) {
+      req.flash("notice", `The inventory item "${inv_make} ${inv_model}" was successfully added.`);
+      res.redirect("/inv/");
+    } else {
+      req.flash("notice", "Failed to add inventory item.");
+      res.status(400).render("inventory/add-inventory", {
+        title: "Add Inventory Item",
+        nav: await utilities.getNav(),
+        classificationDropdown: await utilities.buildClassificationList(),
+        messages: req.flash("notice"),
+        errors: null,
+        ...req.body,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = invCont;

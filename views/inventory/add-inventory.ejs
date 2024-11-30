@@ -1,0 +1,81 @@
+<main>
+  <h1>Add New Inventory Item</h1>
+
+  <!-- Flash Messages -->
+  <% if (typeof messages !== "undefined" && messages.length > 0) { %>
+    <div class="flash-message">
+      <%- messages %>
+    </div>
+  <% } %>
+
+  <!-- Error Display -->
+  <% if (errors && errors.length > 0) { %>
+    <div class="error-message">
+      <ul>
+        <% errors.forEach(function (error) { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+
+  <!-- Add Inventory Form -->
+  <form action="/inv/add-inventory" method="post" class="inventory-form">
+    <label for="classification_id">Classification:</label>
+    <%- classificationDropdown %>    
+
+    <label for="inv_make">Make:</label>
+    <input
+      type="text"
+      id="inv_make"
+      name="inv_make"
+      required
+      value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"
+    >
+    <span class="validation-message"></span>
+
+    <label for="inv_model">Model:</label>
+    <input
+      type="text"
+      id="inv_model"
+      name="inv_model"
+      required
+      value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"
+    >
+    <span class="validation-message"></span>
+
+    <label for="inv_year">Year:</label>
+    <input
+      type="number"
+      id="inv_year"
+      name="inv_year"
+      required
+      min="1900"
+      max="2100"
+      value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"
+    >
+    <span class="validation-message"></span>
+
+    <label for="inv_price">Price:</label>
+    <input
+      type="number"
+      id="inv_price"
+      name="inv_price"
+      required
+      min="0"
+      step="0.01"
+      value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>"
+    >
+    <span class="validation-message"></span>
+
+    <label for="inv_description">Description:</label>
+    <textarea
+      id="inv_description"
+      name="inv_description"
+      required
+    ><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
+    <span class="validation-message"></span>
+
+    <button type="submit">Add Inventory</button>
+  </form>
+</main>

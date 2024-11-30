@@ -15,9 +15,9 @@ inventoryValidate.addClassificationRules = () => {
   ];
 };
 
-/* ******************************
+/*****************************************************************
  * Check data and return errors or continue to add classification
- * ***************************** */
+ *****************************************************************/
 inventoryValidate.checkAddClassification = async (req, res, next) => {
   const { classification_name } = req.body;
   const errors = validationResult(req);
@@ -29,6 +29,40 @@ inventoryValidate.checkAddClassification = async (req, res, next) => {
       nav,
       messages: req.flash("notice"),
       classification_name,
+    });
+    return;
+  }
+  next();
+};
+
+/**********************************
+ *  Add Inventory Validation Rules
+ **********************************/
+inventoryValidate.addInventoryRules = () => {
+  return [
+    body("inv_make").trim().isAlphanumeric().withMessage("Make is required and must be alphanumeric."),
+    body("inv_model").trim().isAlphanumeric().withMessage("Model is required and must be alphanumeric."),
+    body("inv_year").isInt({ min: 1900, max: 2100 }).withMessage("Year must be a valid number between 1900 and 2100."),
+    body("inv_price").isFloat({ min: 0 }).withMessage("Price must be a positive number."),
+    body("inv_description").trim().notEmpty().withMessage("Description is required."),
+  ];
+};
+
+/*****************************************************************
+ * Check data and return errors or continue to add inventory item
+ *****************************************************************/
+inventoryValidate.checkAddInventory = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    const classificationDropdown = await utilities.buildClassificationList(req.body.classification_id);
+    res.status(400).render("inventory/add-inventory", {
+      title: "Add Inventory Item",
+      nav,
+      classificationDropdown,
+      messages: req.flash("notice"),
+      errors: errors.array(),
+      ...req.body,
     });
     return;
   }
