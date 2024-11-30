@@ -55,18 +55,44 @@ invModel.addClassification = async function (classification_name) {
   }
 };
 
-/************************
- *  Insert new inventory
- ************************/
-invModel.addInventory = async function (inventory) {
-  const { classification_id, inv_make, inv_model, inv_year, inv_price, inv_description } = inventory;
+/****************************
+ * Add New Inventory Item
+ ****************************/
+invModel.addInventory = async function (inventoryData) {
   try {
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_miles,
+      inv_color,
+    } = inventoryData;
+
     const sql = `
       INSERT INTO inventory
-      (classification_id, inv_make, inv_model, inv_year, inv_price, inv_description)
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
+      (classification_id, inv_make, inv_model, inv_year, inv_price, inv_description, inv_image, inv_thumbnail, inv_miles, inv_color)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING *;
     `;
-    const result = await pool.query(sql, [classification_id, inv_make, inv_model, inv_year, inv_price, inv_description]);
+
+    const result = await pool.query(sql, [
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_miles,
+      inv_color,
+    ]);
+
     return result.rows[0];
   } catch (error) {
     console.error("Error adding inventory:", error.message);

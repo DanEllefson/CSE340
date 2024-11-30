@@ -127,7 +127,19 @@ invCont.addInventoryView = async function (req, res, next) {
  *********************************/
 invCont.addInventory = async function (req, res, next) {
   try {
-    const { classification_id, inv_make, inv_model, inv_year, inv_price, inv_description } = req.body;
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_miles,
+      inv_color,
+    } = req.body;
+
     const insertResult = await invModel.addInventory({
       classification_id,
       inv_make,
@@ -135,6 +147,10 @@ invCont.addInventory = async function (req, res, next) {
       inv_year,
       inv_price,
       inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_miles,
+      inv_color,
     });
 
     if (insertResult) {

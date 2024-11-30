@@ -45,6 +45,10 @@ inventoryValidate.addInventoryRules = () => {
     body("inv_year").isInt({ min: 1900, max: 2100 }).withMessage("Year must be a valid number between 1900 and 2100."),
     body("inv_price").isFloat({ min: 0 }).withMessage("Price must be a positive number."),
     body("inv_description").trim().notEmpty().withMessage("Description is required."),
+    body("inv_image").isString().notEmpty().withMessage("Image path is required."),
+    body("inv_thumbnail").isString().notEmpty().withMessage("Thumbnail path is required."),
+    body("inv_miles").isInt({ min: 0 }).withMessage("Miles must be a non-negative number."),
+    body("inv_color").trim().notEmpty().withMessage("Color is required."),
   ];
 };
 
