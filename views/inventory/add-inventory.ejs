@@ -20,7 +20,7 @@
   <% } %>
 
   <!-- Add Inventory Form -->
-  <form action="/inv/add-inventory" method="post" class="inventory-form">
+  <form action="/inv/add-inventory" method="post" class="inventory-form" novalidate>
     <label for="classification_id">Classification:</label>
     <%- classificationDropdown %>
 
@@ -30,6 +30,8 @@
       id="inv_make"
       name="inv_make"
       required
+      pattern="^[a-zA-Z0-9]+$"
+      title="Make must be alphanumeric."
       value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"
     >
     <span class="validation-message"></span>
@@ -40,6 +42,8 @@
       id="inv_model"
       name="inv_model"
       required
+      pattern="^[a-zA-Z0-9]+$"
+      title="Model must be alphanumeric."
       value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"
     >
     <span class="validation-message"></span>
@@ -52,6 +56,7 @@
       required
       min="1900"
       max="2100"
+      title="Year must be between 1900 and 2100."
       value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>"
     >
     <span class="validation-message"></span>
@@ -64,6 +69,7 @@
       required
       min="0"
       step="0.01"
+      title="Price must be a positive number."
       value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>"
     >
     <span class="validation-message"></span>
@@ -73,16 +79,18 @@
       id="inv_description"
       name="inv_description"
       required
+      title="Description is required."
     ><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
     <span class="validation-message"></span>
 
-    <!-- New Fields -->
+    <!-- New Fields with Validation -->
     <label for="inv_image">Image Path:</label>
     <input
       type="text"
       id="inv_image"
       name="inv_image"
       required
+      title="Image path is required."
       value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>"
     >
     <span class="validation-message"></span>
@@ -93,6 +101,7 @@
       id="inv_thumbnail"
       name="inv_thumbnail"
       required
+      title="Thumbnail path is required."
       value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image-tn.png' %>"
     >
     <span class="validation-message"></span>
@@ -104,6 +113,7 @@
       name="inv_miles"
       required
       min="0"
+      title="Miles must be a non-negative number."
       value="<%= typeof inv_miles !== 'undefined' ? inv_miles : '' %>"
     >
     <span class="validation-message"></span>
@@ -114,6 +124,8 @@
       id="inv_color"
       name="inv_color"
       required
+      pattern="^[a-zA-Z]+$"
+      title="Color must contain only letters."
       value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>"
     >
     <span class="validation-message"></span>
@@ -121,3 +133,22 @@
     <button type="submit">Add Inventory</button>
   </form>
 </main>
+
+<script>
+  document.querySelectorAll('input[required], textarea[required]').forEach((input) => {
+    input.addEventListener('blur', (event) => {
+      const field = event.target;
+      const validationMessage = field.nextElementSibling; // Target span
+
+      if (validationMessage && validationMessage.classList.contains('validation-message')) {
+        if (!field.checkValidity()) {
+          field.classList.add('error');
+          validationMessage.textContent = field.title;
+        } else {
+          field.classList.remove('error');
+          validationMessage.textContent = '';
+        }
+      }
+    });
+  });
+</script>

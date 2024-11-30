@@ -127,6 +127,7 @@ invCont.addInventoryView = async function (req, res, next) {
  *********************************/
 invCont.addInventory = async function (req, res, next) {
   try {
+    // Extract and sanitize input values
     const {
       classification_id,
       inv_make,
@@ -140,21 +141,25 @@ invCont.addInventory = async function (req, res, next) {
       inv_color,
     } = req.body;
 
-    const insertResult = await invModel.addInventory({
-      classification_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_price,
-      inv_description,
-      inv_image,
-      inv_thumbnail,
-      inv_miles,
-      inv_color,
-    });
+    // Convert empty strings to null for numerical fields
+    const sanitizedData = {
+      classification_id: classification_id || null,
+      inv_make: inv_make.trim(),
+      inv_model: inv_model.trim(),
+      inv_year: inv_year ? parseInt(inv_year, 10) : null,
+      inv_price: inv_price ? parseFloat(inv_price) : null,
+      inv_description: inv_description.trim(),
+      inv_image: inv_image.trim(),
+      inv_thumbnail: inv_thumbnail.trim(),
+      inv_miles: inv_miles ? parseInt(inv_miles, 10) : null,
+      inv_color: inv_color.trim(),
+    };
+
+    // Pass sanitized data to the model
+    const insertResult = await invModel.addInventory(sanitizedData);
 
     if (insertResult) {
-      req.flash("notice", `The inventory item "${inv_make} ${inv_model}" was successfully added.`);
+      req.flash("notice", `The inventory item "${sanitizedData.inv_make} ${sanitizedData.inv_model}" was successfully added.`);
       res.redirect("/inv/");
     } else {
       req.flash("notice", "Failed to add inventory item.");
