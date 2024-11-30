@@ -11,6 +11,7 @@
 /********************************/
 body {
   font-family: Arial, sans-serif;
+  padding: 10px; /* May not be necessary */
 }
 
 nav {
@@ -65,6 +66,12 @@ nav ul li a {
   text-decoration: none;
   position: relative;
   top: -10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
 }
 
 h1 {
@@ -482,11 +489,72 @@ input::placeholder {
 
 
 /********************************/
+/* Add New Classification & Inventory Forms */
+/********************************/
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-container textarea {
+  resize: vertical;
+}
+
+.form-container button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+
+/********************************/
 /* Viewport for larger screens  */
 /********************************/
-@media (min-width: 769px) {   
+@media (min-width: 768px) {   
   body {
     background-image: url("/images/site/small_check.jpg");
+  }
+
+  .form-container {
+    max-width: 600px;
+  }
+
+  h1 {
+    font-size: 2em;
   }
 
   #wrapper { 
@@ -581,7 +649,7 @@ input::placeholder {
 
 
   /********************************/
-  /* Classifications Page (Size: 769)*/
+  /* Classifications Page (Size: 768)*/
   /********************************/
   #inv-display {
     display: flex;
@@ -594,7 +662,7 @@ input::placeholder {
 
 
   /********************************/
-  /* Details Page (Size: 769)*/
+  /* Details Page (Size: 768)*/
   /********************************/
   .vehicle-detail {
     font-size: 23px;
