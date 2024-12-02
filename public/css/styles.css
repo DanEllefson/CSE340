@@ -11,12 +11,13 @@
 /********************************/
 body {
   font-family: Arial, sans-serif;
-  padding: 10px; /* May not be necessary */
+  padding: 10px;
 }
 
 nav {
   background-color: #333;
   padding: 10px 0;
+  font-size: 12px;
 }
 
 nav ul {
@@ -225,11 +226,6 @@ footer a {
 /********************************/
 /* Classifications Page */
 /********************************/
-#classificationHeading {
-  font-size: 26px;
-  margin-left: 20px;
-}
-
 #inv-display li {
   max-width: 280px;
   max-height: 400px;
@@ -265,11 +261,6 @@ footer a {
 /********************************/
 /* Details Page */
 /********************************/
-
-#detailsHeading  {
-  font-size: 26px;
-}
-
 .vehicle-detail {
   font-size: 23px;
 }
@@ -287,11 +278,6 @@ footer a {
 /********************************/
 /* Error Page */
 /********************************/
-#errorHeading {
-  font-size: 26px;
-  margin-left: 20px;
-}
-
 #errorHeading, #errorMessage {
   margin-left: 20px;
 }
@@ -319,6 +305,7 @@ footer a {
 
 .login-form label {
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .login-form input {
@@ -334,6 +321,8 @@ footer a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .flash-message {
@@ -354,7 +343,6 @@ footer a {
 /***************************/
 /* Management Page Styles  */
 /***************************/
-
 .management-container {
   max-width: 400px;
   margin: 0 auto;
@@ -362,10 +350,9 @@ footer a {
   flex-direction: column;
 }
 
-.management-container h1 {
+.management-container h2 {
   text-align: center;
   font-size: 24px;
-  margin-bottom: 20px;
 }
 
 .management-container ul {
@@ -404,6 +391,11 @@ footer a {
   text-align: center;
 }
 
+.management-container a {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
 
 /***********************/
 /* Classification Page */
@@ -419,9 +411,13 @@ footer a {
   display: block;
 }
 
-/* Button Placement */
-.classification-form button {
+.validation-message {
+  font-size: 1.1em !important;
+}
+
+.form-container button {
   margin-top: 1em;
+  font-weight: bold;
 }
 
 
@@ -437,6 +433,7 @@ footer a {
 
 .register-form label {
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .register-form input {
@@ -452,18 +449,22 @@ footer a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .required {
   color: red;
   font-weight: bold;
+  font-size: 1.5em;
 }
 
 .form-instructions {
   font-size: 0.9em;
   margin-bottom: 15px;
+  margin-left: 15px;
   color: #555;
+  font-weight: bold;
 }
 
 input.error {
@@ -478,7 +479,6 @@ input.error + span {
 #togglePassword {
   display: inline-block;
   padding: 8px 12px;
-  font-size: 1rem;
   background-color: #007bff;
   color: white;
   border: none;
@@ -499,15 +499,13 @@ input.error + span {
   font-size: 1rem;
 }
 
-/* Invalid Input Styling */
 input:required:invalid {
-  background-color: #ffe6e6; /* Light red */
+  background-color: #ffe6e6;
   border-color: red;
 }
 
-/* Valid Input Styling */
 input:required:valid {
-  background-color: #e6ffe6; /* Light green */
+  background-color: #e6ffe6;
   border-color: green;
 }
 
@@ -516,7 +514,7 @@ input {
 }
 
 input::placeholder {
-  color: #888; /* Light gray */
+  color: #888;
 }
 
 
@@ -565,7 +563,7 @@ input::placeholder {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .form-container button:hover {
@@ -579,6 +577,15 @@ input::placeholder {
 @media (min-width: 768px) {   
   body {
     background-image: url("/images/site/small_check.jpg");
+  }
+
+  nav {
+    font-size: 17px;
+  }
+
+  .sub-heading {
+    font-size: 26px;
+    margin-left: 20px;
   }
 
   .form-container {
