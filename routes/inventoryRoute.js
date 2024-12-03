@@ -14,6 +14,9 @@ router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildDet
 // Route for inventory management view
 router.get("/", utilities.handleErrors(invController.managementView));
 
+// Route to get a list of items in inventory based on the classification_id
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 // Route to add a classification
 router.get("/add-classification", utilities.handleErrors(invController.addClassificationView));
 
