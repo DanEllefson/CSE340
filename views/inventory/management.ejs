@@ -19,19 +19,20 @@
     </ul>
   </section>
 
-  <!-- Managing Inventory -->
+  <!-- Inventory Management Section -->
   <h2>Manage Inventory</h2>
   <p>Select a classification from the list below to see the items belonging to that classification.</p>
 
-  <!-- Classification List -->
-  <%- classificationSelect %>
+  <!-- Classification Dropdown -->
+  <div>
+    <%- classificationSelect %>
+  </div>
 
-  <!-- Inventory Table -->
+  <!-- Inventory Display Table -->
   <table id="inventoryDisplay"></table>
 
   <!-- NoScript Fallback -->
   <noscript>JavaScript must be enabled to use this page.</noscript>
-
 </div>
 
 <script src="../../js/inventory.js"></script>
