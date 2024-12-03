@@ -1,10 +1,16 @@
 
-<h2 class="sub-heading">Add New Inventory Item</h2>
+<h2 class="sub-heading">Modify Inventory Item</h2>
 
 <!-- Flash Messages -->
-<% if (typeof messages !== "undefined" && messages.length > 0) { %>
+<% if (messages && Object.keys(messages).length > 0) { %>
   <div class="flash-message">
-    <%- messages %>
+    <% Object.keys(messages).forEach(function(type) { %>
+      <div class="flash-<%= type %>">
+        <% messages[type].forEach(function(msg) { %>
+          <p><%= msg %></p>
+        <% }); %>
+      </div>
+    <% }); %>
   </div>
 <% } %>
 
@@ -21,9 +27,10 @@
 
 <!-- Form -->
 <div class="form-container">
-  <form action="/inv/add-inventory" method="POST">
+  <form action="/inv/update" method="POST">
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
     <label for="classificationList">Classification:</label>
-    <%- classificationDropdown %>
+    <%- classificationSelect %>
 
     <label for="inv_make">Make:</label>
     <input
@@ -148,7 +155,7 @@
 
     <br>
 
-    <button type="submit">Add Inventory</button>
+    <button type="submit">Update Vehicle</button>
   </form>
 </div>
 
