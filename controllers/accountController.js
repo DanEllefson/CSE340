@@ -129,4 +129,22 @@ async function accountLogin(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin };
+/* ****************************************
+ *  Deliver Account Management View
+ * ************************************ */
+async function buildAccountManagementView(req, res) {
+  try {
+    const nav = await utilities.getNav();
+    res.render("account/account-management", {
+      title: "Account Management",
+      nav,
+      messages: req.flash.bind(req), // Pass messages as a function
+      errors: null,
+      accountData: req.accountData || null,
+    });
+  } catch (error) {
+    throw new Error("Error rendering Account Management View");
+  }
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView };
