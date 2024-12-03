@@ -39,4 +39,7 @@ router.post(
   utilities.handleErrors(invController.addInventory)
 );
 
+// Route to handle modifying an inventory item
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.editInventoryView));
+
 module.exports = router;
