@@ -37,8 +37,8 @@
       id="inv_make"
       name="inv_make"
       required
-      pattern="^[a-zA-Z0-9]+$"
-      title="Make must be alphanumeric."
+      pattern="^[a-zA-Z0-9\s]+$"
+      title="Make must be alphanumeric and can include spaces."
       value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>"
     >
     <span class="validation-message"></span>
@@ -51,8 +51,8 @@
       id="inv_model"
       name="inv_model"
       required
-      pattern="^[a-zA-Z0-9]+$"
-      title="Model must be alphanumeric."
+      pattern="^[a-zA-Z0-9\s]+$"
+      title="Make must be alphanumeric and can include spaces."
       value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>"
     >
     <span class="validation-message"></span>

@@ -40,8 +40,8 @@ inventoryValidate.checkAddClassification = async (req, res, next) => {
  **********************************/
 inventoryValidate.addInventoryRules = () => {
   return [
-    body("inv_make").trim().isAlphanumeric().withMessage("Make is required and must be alphanumeric."),
-    body("inv_model").trim().isAlphanumeric().withMessage("Model is required and must be alphanumeric."),
+    body("inv_make").trim().matches(/^[a-zA-Z0-9 ]+$/).withMessage("Make is required and must be alphanumeric and can contain spaces."),
+    body("inv_model").trim().matches(/^[a-zA-Z0-9 ]+$/).withMessage("Model is required and must be alphanumeric and can contain spaces."),
     body("inv_year").isInt({ min: 1900, max: 2100 }).withMessage("Year must be a valid number between 1900 and 2100."),
     body("inv_price").isFloat({ min: 0 }).withMessage("Price must be a positive number."),
     body("inv_description").trim().notEmpty().withMessage("Description is required."),
@@ -78,8 +78,8 @@ inventoryValidate.checkAddInventory = async (req, res, next) => {
  **********************************/
 inventoryValidate.newInventoryRules = () => {
   return [
-    body("inv_make").trim().isAlphanumeric().withMessage("Make is required and must be alphanumeric."),
-    body("inv_model").trim().isAlphanumeric().withMessage("Model is required and must be alphanumeric."),
+    body("inv_make").trim().matches(/^[a-zA-Z0-9 ]+$/).withMessage("Make is required and must be alphanumeric and can contain spaces."),
+    body("inv_model").trim().matches(/^[a-zA-Z0-9 ]+$/).withMessage("Model is required and must be alphanumeric and can contain spaces."),
     body("inv_year").isInt({ min: 1900, max: 2100 }).withMessage("Year must be a valid number between 1900 and 2100."),
     body("inv_price").isFloat({ min: 0 }).withMessage("Price must be a positive number."),
     body("inv_description").trim().notEmpty().withMessage("Description is required."),
