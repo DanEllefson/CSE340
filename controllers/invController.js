@@ -338,4 +338,35 @@ invCont.deleteInventoryView = async function (req, res, next) {
   }
 };
 
+/*******************************
+ *  Delete Inventory Item
+ *******************************/
+invCont.deleteInventory = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+
+    // Extract the inv_id from the request body
+    const inv_id = parseInt(req.body.inv_id, 10);
+
+    // Validate the inv_id
+    if (isNaN(inv_id)) {
+      req.flash("notice", "Invalid inventory ID. Please try again.");
+      return res.redirect(`/inv/delete/${inv_id}`);
+    }
+
+    // Call the model function to delete the inventory item
+    const deleteResult = await invModel.deleteInventoryItem(inv_id);
+
+    if (deleteResult) {
+      req.flash("notice", "The inventory item was successfully deleted.");
+      res.redirect("/inv/");
+    } else {
+      req.flash("notice", "Sorry, the delete failed. Please try again.");
+      res.redirect(`/inv/delete/${inv_id}`);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = invCont;
