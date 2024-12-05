@@ -196,28 +196,28 @@ invCont.getInventoryJSON = async (req, res, next) => {
  *  Build edit inventory view
  * ************************** */
 invCont.editInventoryView = async function (req, res, next) {
-  const inv_id = parseInt(req.params.inventoryId); // Make sure the id is an integer
+  const inv_id = parseInt(req.params.inventoryId);
 
   if (isNaN(inv_id)) {
     return res.status(400).send("Invalid inventory ID");
   }
 
   try {
-    const nav = await utilities.getNav(); // Add navigation
-    const itemData = await invModel.getInventoryById(inv_id); // Get inventory data by ID
+    const nav = await utilities.getNav();
+    const itemData = await invModel.getInventoryById(inv_id);
 
     if (!itemData) {
       return res.status(404).send("Inventory item not found");
     }
 
-    const classificationSelect = await utilities.buildClassificationList(itemData.classification_id); // Get classification list
-    const itemName = `${itemData.inv_make} ${itemData.inv_model}`; // Get item name for title
+    const classificationSelect = await utilities.buildClassificationList(itemData.classification_id);
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
 
     res.render("./inventory/edit-inventory", {
       title: "Edit " + itemName,
       nav,
       classificationSelect,
-      errors: null, // no errors for now
+      errors: null,
       inv_id: itemData.inv_id,
       inv_make: itemData.inv_make,
       inv_model: itemData.inv_model,
@@ -294,5 +294,48 @@ invCont.updateInventory = async function (req, res, next) {
     })
   }
 }
+
+/************************************
+ *  Build delete inventory item view
+ ************************************/
+invCont.deleteInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inventoryId);
+
+  if (isNaN(inv_id)) {
+    return res.status(400).send("Invalid inventory ID");
+  }
+
+  try {
+    const nav = await utilities.getNav();
+    const itemData = await invModel.getInventoryById(inv_id);
+
+    if (!itemData) {
+      return res.status(404).send("Inventory item not found");
+    }
+
+    // const classificationSelect = await utilities.buildClassificationList(itemData.classification_id);
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+
+    res.render("./inventory/edit-inventory", {
+      title: "Delete " + itemName,
+      nav,
+      // classificationSelect,
+      errors: null,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_description: itemData.inv_description,
+      inv_image: itemData.inv_image,
+      inv_thumbnail: itemData.inv_thumbnail,
+      inv_price: itemData.inv_price,
+      inv_miles: itemData.inv_miles,
+      inv_color: itemData.inv_color,
+      classification_id: itemData.classification_id
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = invCont;
