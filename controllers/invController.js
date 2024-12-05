@@ -299,7 +299,7 @@ invCont.updateInventory = async function (req, res, next) {
  *  Build delete inventory item view
  ************************************/
 invCont.deleteInventoryView = async function (req, res, next) {
-  const inv_id = parseInt(req.params.inventoryId);
+  const inv_id = parseInt(req.params.inventoryId, 10);
 
   if (isNaN(inv_id)) {
     return res.status(400).send("Invalid inventory ID");
@@ -313,13 +313,11 @@ invCont.deleteInventoryView = async function (req, res, next) {
       return res.status(404).send("Inventory item not found");
     }
 
-    // const classificationSelect = await utilities.buildClassificationList(itemData.classification_id);
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
 
-    res.render("./inventory/edit-inventory", {
+    res.render("./inventory/delete-confirm", {
       title: "Delete " + itemName,
       nav,
-      // classificationSelect,
       errors: null,
       inv_id: itemData.inv_id,
       inv_make: itemData.inv_make,
@@ -331,7 +329,7 @@ invCont.deleteInventoryView = async function (req, res, next) {
       inv_price: itemData.inv_price,
       inv_miles: itemData.inv_miles,
       inv_color: itemData.inv_color,
-      classification_id: itemData.classification_id
+      classification_id: itemData.classification_id,
     });
   } catch (error) {
     next(error);
