@@ -69,6 +69,36 @@ nav ul li a {
   top: -10px;
 }
 
+
+/********************************/
+/* TESTING          */
+/********************************/
+#header #account {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+#header .account-info {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+#header .account-info a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+#header .account-info a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/********************************/
+/* END TESTING          */
+/********************************/
+
 .error-message {
   color: red;
   font-size: 0.9em;

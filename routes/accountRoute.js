@@ -15,6 +15,12 @@ router.get(
 // Route to deliver the login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
+// Route to logout the user
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  res.redirect("/");
+});
+
 // Route to deliver the registration view
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
@@ -33,5 +39,11 @@ router.post(
   regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
 )
+
+// Route to deliver the password reset view
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  res.redirect("/");
+});
 
 module.exports = router;

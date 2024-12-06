@@ -1,11 +1,23 @@
-  <header id="header">
-    <div id="branding">
-      <a href="/" class="brand-link" title="Return to home page">
-        <span class="brand-title">CSE Motors</span>
-      </a>
-    </div>
-    <div id="account">
-      <a href="/account/login" class="account-link">My Account</a>
-    </div>
-  </header>
+<header id="header">
+  <!-- Logo Section -->
+  <div id="branding">
+    <a href="/" class="brand-link" title="Return to home page">
+      <span class="brand-title">CSE Motors</span>
+    </a>
+  </div>
+
+  <!-- Account Section -->
+  <div id="account">
+    <% if (locals.loggedin) { %>
+      <!-- Welcome message and Logout link on the same line -->
+      <span class="account-info">
+        Welcome <%= locals.clientName || 'User' %> | 
+        <a href="/account/logout">Logout</a>
+      </span>
+    <% } else { %>
+      <!-- My Account link for logged-out users -->
+      <a href="/account/login">My Account</a>
+    <% } %>
+  </div>
+</header>
   
