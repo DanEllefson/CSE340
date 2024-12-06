@@ -62,7 +62,7 @@ app.use((req, res, next) => {
     const token = req.cookies.jwt;
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      res.locals.clientName = decoded.clientName || "User"; // Default fallback
+      res.locals.clientName = decoded.clientName || "User";
     } catch (error) {
       console.error("Invalid token:", error.message);
     }
