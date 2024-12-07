@@ -41,6 +41,7 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
+// Route to deliver the password reset view
 router.get(
   "/management",
   utilities.checkJWTToken,
