@@ -5,12 +5,13 @@ const utilities = require("../utilities/");
 const accountController = require("../controllers/accountController");
 const regValidate = require('../utilities/account-validation')
 
-// Deliver the Account Management View
+// Deliver Account Management View
 router.get(
-  "/", 
-  utilities.checkLogin, 
+  "/",
+  utilities.checkLogin,
+  utilities.attachAccountData,
   utilities.handleErrors(accountController.buildAccountManagementView)
-)
+);
 
 // Route to deliver the login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
@@ -40,10 +41,11 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
-// Route to deliver the password reset view
-router.get("/logout", (req, res) => {
-  res.clearCookie("jwt");
-  res.redirect("/");
-});
+router.get(
+  "/management",
+  utilities.checkJWTToken,
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountManagementView)
+);
 
 module.exports = router;

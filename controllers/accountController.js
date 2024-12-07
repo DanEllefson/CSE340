@@ -141,14 +141,23 @@ async function accountLogin(req, res) {
 async function buildAccountManagementView(req, res) {
   try {
     const nav = await utilities.getNav();
+    const { account_type = "Client", account_firstname = "User" } = req.accountData || {};
+
+    const inventoryManagement =
+      account_type === "Employee" || account_type === "Admin"
+        ? { showInventoryManagement: true, inventoryLink: "/inv/" }
+        : { showInventoryManagement: false };
+
     res.render("account/account-management", {
       title: "Account Management",
       nav,
-      messages: req.flash.bind(req), // Pass messages as a function
+      messages: req.flash.bind(req),
       errors: null,
       accountData: req.accountData || null,
+      inventoryManagement,
     });
   } catch (error) {
+    console.error("Error rendering Account Management View:", error.message);
     throw new Error("Error rendering Account Management View");
   }
 }
