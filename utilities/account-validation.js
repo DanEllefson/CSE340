@@ -130,9 +130,34 @@ validate.checkLoginData = async (req, res, next) => {
  * ***************************** */
 validate.newAccountRules = () => {
   return [
-    body("account_firstname").isLength({ min: 1 }).trim().escape(),
-    body("account_lastname").isLength({ min: 1 }).trim().escape(),
-    body("account_email").isEmail().normalizeEmail(),
+    // firstname is required and must be string
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."),
+
+    // lastname is required and must be string
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."),
+
+    // valid email is required and cannot already exist in the database
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (emailExists){
+          throw new Error("Email exists. Please log in or use different email")
+        }
+      }),
   ];
 }
 
@@ -141,14 +166,20 @@ validate.newAccountRules = () => {
  * ***************************** */
 validate.passwordValidationRules = () => {
   return [
+    // password is required and must be strong password
     body("account_password")
-      .isStrongPassword()
-      .withMessage("Password must be at least 8 characters and contain 1 uppercase, 1 number, and 1 symbol.")
       .trim()
-      .escape(),
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password must be at least 8 characters and contain 1 uppercase, 1 number, and 1 symbol."),
   ];
 }
-
 /* ******************************
  * Check account data and return errors
  * ***************************** */
