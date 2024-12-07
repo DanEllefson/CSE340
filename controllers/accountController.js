@@ -186,25 +186,50 @@ async function buildUpdateAccountView(req, res) {
 /* ****************************************
  *  Process Update Account Form
  * ************************************ */
-async function processUpdateAccount(req, res) {
-  const { account_firstname, account_lastname, account_email, account_id } = req.body;
+async function processUpdateAccount(req, res, next) {
+  try {
+    const { account_firstname, account_lastname, account_email } = req.body;
+    const account_id = parseInt(req.body.account_id, 10);
 
-  const updateResult = await accountModel.updateAccount(
-    account_firstname,
-    account_lastname,
-    account_email,
-    account_id
-  );
+    if (isNaN(account_id)) {
+      throw new Error("Invalid account_id: must be an integer");
+    }
 
-  if (updateResult) {
-    req.flash(
-      "notice",
-      `Account successfully updated for ${account_firstname} ${account_lastname}.`
+    // Update the account in the database
+    const result = await accountModel.updateAccount( 
+      account_firstname, 
+      account_lastname, 
+      account_email,
+      account_id
     );
-    return res.redirect("/account/");
-  } else {
-    req.flash("notice", "Account update failed. Please try again.");
-    return res.redirect(`/account/update/${account_id}`);
+
+    if (result) {
+      // Confirm the update by fetching the account data
+      const updatedAccount = await accountModel.getAccountById(account_id);
+
+      // Update res.locals.clientName for header
+      res.locals.clientName = updatedAccount.account_firstname;
+
+      // Deliver management view with success message
+      req.flash(
+        "notice",
+        `Account successfully updated for ${account_firstname} ${account_lastname}.`
+      );
+      let nav = await utilities.getNav();
+      res.render("account/account-management", {
+        title: "Account Management",
+        nav,
+        accountData: updatedAccount,
+        messages: req.flash("notice"),
+      });
+    } else {
+        req.flash("notice", "Database update failed. Please try again.");
+        return res.redirect(`/account/update/${account_id}`);
+    }
+  } catch (error) {
+    console.error("Error processing account update:", error.message);
+    req.flash("error", "Unable to update account at this time.");
+    next(error);
   }
 }
 
@@ -229,8 +254,20 @@ async function processUpdatePassword(req, res) {
   );
 
   if (passwordResult) {
-    req.flash("notice", "Password successfully updated.");
-    return res.redirect("/account/");
+    // Deliver management view with success message
+    req.flash("notice", "Password updated successfully.");
+
+    // Confirm the password update by fetching the account data
+    const accountData = await accountModel.getAccountById(account_id);
+
+    // Update the account management view
+    let nav = await utilities.getNav();
+    res.render("account/account-management", {
+      title: "Account Management",
+      nav,
+      accountData,
+      messages: req.flash("notice"),
+    });
   } else {
     req.flash("notice", "Password update failed. Please try again.");
     return buildUpdateAccountView(req, res);
