@@ -69,10 +69,6 @@ nav ul li a {
   top: -10px;
 }
 
-
-/********************************/
-/* TESTING          */
-/********************************/
 #header #account {
   display: flex;
   align-items: center;
@@ -106,11 +102,6 @@ nav ul li a {
   text-decoration: underline;
   color: #003f88;
 }
-
-
-/********************************/
-/* END TESTING          */
-/********************************/
 
 .error-message {
   color: red;
@@ -670,6 +661,41 @@ button:disabled {
 button {
   transition: background-color 0.3s, color 0.3s, opacity 0.3s;
 }
+
+
+/********************************/
+/* Account Management View      */
+/********************************/
+.account-management-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-management-container h1 {
+  font-size: 2.1em;
+  margin-bottom: 20px;
+}
+
+.account-management-container h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.account-management-container h3 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.account-management-container p {
+  font-size: 1.3em;
+  margin-bottom: 20px;
+}
+
 
 /********************************/
 /* Viewport for larger screens  */
