@@ -261,7 +261,7 @@ async function getUpdateAccountView(req, res, next) {
       account_lastname: accountData.account_lastname,
       account_email: accountData.account_email,
       errors: null,
-      messages: req.flash("notice"),
+      messages: req.flash.bind(req),
     });
   } catch (err) {
     console.error("Error fetching account data:", err);

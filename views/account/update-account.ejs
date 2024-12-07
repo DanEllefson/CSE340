@@ -1,20 +1,28 @@
 <div class="form-container">
-  <!-- Flash Message -->
-  <% if (messages) { %>
-    <div class="flash-message"><%= messages %></div>
-  <% } %>
+  <h1><%= title %></h1>
 
-  <!-- Update Account Form -->
-  <form action="/account/update" method="POST" id="updateAccountForm">
-    <h2>Update Account</h2>
+  <!-- Flash Message -->
+  <div class="flash-message">
+    <%- messages() %>
+    <% if (errors) { %>
+      <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+      </ul>
+    <% } %>
+  </div>
+
+  <!-- Account Update Form -->
+  <form id="updateAccountForm" action="/account/update" method="POST" novalidate>
     <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
 
     <label for="account_firstname">First Name</label>
     <input
       type="text"
-      name="account_firstname"
       id="account_firstname"
-      value="<%= accountData.account_firstname %>"
+      name="account_firstname"
+      value="<%= accountData.account_firstname || '' %>"
       required>
     <% if (errors && errors.account_firstname) { %>
       <span class="error-message"><%= errors.account_firstname %></span>
@@ -23,9 +31,9 @@
     <label for="account_lastname">Last Name</label>
     <input
       type="text"
-      name="account_lastname"
       id="account_lastname"
-      value="<%= accountData.account_lastname %>"
+      name="account_lastname"
+      value="<%= accountData.account_lastname || '' %>"
       required>
     <% if (errors && errors.account_lastname) { %>
       <span class="error-message"><%= errors.account_lastname %></span>
@@ -34,35 +42,91 @@
     <label for="account_email">Email</label>
     <input
       type="email"
-      name="account_email"
       id="account_email"
-      value="<%= accountData.account_email %>"
+      name="account_email"
+      value="<%= accountData.account_email || '' %>"
       required>
     <% if (errors && errors.account_email) { %>
       <span class="error-message"><%= errors.account_email %></span>
     <% } %>
 
-    <button type="submit">Update Account</button>
+    <button type="submit" id="updateAccountButton">Update Account</button>
   </form>
 
-  <!-- Change Password Form -->
-  <form action="/account/update-password" method="POST" id="changePasswordForm">
-    <h2>Change Password</h2>
+  <!-- Password Change Form -->
+  <form id="changePasswordForm" action="/account/update-password" method="POST" novalidate>
     <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
 
-    <label for="account_password">New Password</label>
+    <label for="new_password">New Password</label>
     <input
       type="password"
-      name="account_password"
-      id="account_password"
+      id="new_password"
+      name="new_password"
       required>
-    <p class="form-instructions">
-      Passwords must be at least 8 characters and contain a mix of letters, numbers, and symbols.
-    </p>
-    <% if (errors && errors.account_password) { %>
-      <span class="error-message"><%= errors.account_password %></span>
+    <% if (errors && errors.new_password) { %>
+      <span class="error-message"><%= errors.new_password %></span>
     <% } %>
 
-    <button type="submit">Change Password</button>
+    <p class="form-instructions">
+      Password must be at least 8 characters long and include a mix of letters and numbers.
+    </p>
+    <button type="submit" id="changePasswordButton">Change Password</button>
   </form>
 </div>
+
+<script>
+  document.getElementById("updateAccountForm").addEventListener("submit", function(event) {
+    let valid = true;
+
+    // Validate First Name
+    const firstname = document.getElementById("account_firstname").value.trim();
+    if (firstname === "") {
+      valid = false;
+      document.getElementById("firstnameError").textContent = "First name is required.";
+    } else {
+      document.getElementById("firstnameError").textContent = "";
+    }
+
+    // Validate Last Name
+    const lastname = document.getElementById("account_lastname").value.trim();
+    if (lastname === "") {
+      valid = false;
+      document.getElementById("lastnameError").textContent = "Last name is required.";
+    } else {
+      document.getElementById("lastnameError").textContent = "";
+    }
+
+    // Validate Email
+    const email = document.getElementById("account_email").value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      valid = false;
+      document.getElementById("emailError").textContent = "Enter a valid email.";
+    } else {
+      document.getElementById("emailError").textContent = "";
+    }
+
+    if (!valid) {
+      event.preventDefault();
+    }
+  });
+
+  document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
+    let valid = true;
+
+    // Validate Password
+    const password = document.getElementById("account_password").value;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordPattern.test(password)) {
+      valid = false;
+      document.getElementById("passwordError").textContent =
+        "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.";
+    } else {
+      document.getElementById("passwordError").textContent = "";
+    }
+
+    if (!valid) {
+      event.preventDefault();
+    }
+  });
+</script>
