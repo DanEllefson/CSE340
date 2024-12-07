@@ -2,18 +2,15 @@
   <h1><%= title %></h1>
 
 <!-- Flash Message -->
-<div class="flash-message">
-  <%- messages() %>
-  <% if (errors && errors.length > 0) { %>
-    <div class="error-message">
-      <ul>
-        <% errors.forEach(function (error) { %>
-          <li><%= error.msg %></li>
-        <% }); %>
-      </ul>
-    </div>
-  <% } %>
-</div>
+<% if (messages && messages.length > 0) { %>
+  <div class="flash-message">
+    <ul>
+      <% messages.forEach(function (message) { %>
+        <li><%= message %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>
 
 <!-- Account Update Form -->
 <form id="updateAccountForm" action="/account/update" method="POST" novalidate>

@@ -2,12 +2,16 @@
   <!-- Title -->
   <h1><%= title %></h1>
 
-  <!-- Flash Messages -->
-  <% if (typeof messages !== "undefined" && typeof messages === "function") { %>
+  <!-- Flash Message -->
+  <% if (messages && messages.length > 0) { %>
     <div class="flash-message">
-      <%- messages() %>
+      <ul>
+        <% messages.forEach(function (message) { %>
+          <li><%= message %></li>
+        <% }); %>
+      </ul>
     </div>
-  <% } %>
+  <% } %>  
 
   <!-- Greeting -->
   <h2>Welcome <%= accountData.account_firstname || "User" %></h2>

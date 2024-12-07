@@ -142,6 +142,7 @@ async function buildAccountManagementView(req, res) {
   try {
     const nav = await utilities.getNav();
     const { account_type = "Client", account_firstname = "User" } = req.accountData || {};
+    const messages = req.flash("notice");
 
     const inventoryManagement =
       account_type === "Employee" || account_type === "Admin"
@@ -151,7 +152,7 @@ async function buildAccountManagementView(req, res) {
     res.render("account/account-management", {
       title: "Account Management",
       nav,
-      messages: req.flash.bind(req),
+      messages,
       errors: null,
       accountData: req.accountData || null,
       inventoryManagement,
@@ -174,7 +175,7 @@ async function buildUpdateAccountView(req, res) {
     title: "Update Account",
     nav,
     errors: null,
-    messages: req.flash.bind(req),
+    messages: req.flash("notice"),
     account_firstname,
     account_lastname,
     account_email,
@@ -261,7 +262,7 @@ async function getUpdateAccountView(req, res, next) {
       account_lastname: accountData.account_lastname,
       account_email: accountData.account_email,
       errors: null,
-      messages: req.flash.bind(req),
+      messages: req.flash("notice"),
     });
   } catch (err) {
     console.error("Error fetching account data:", err);
