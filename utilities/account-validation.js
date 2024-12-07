@@ -14,7 +14,7 @@ validate.registationRules = () => {
       .escape()
       .notEmpty()
       .isLength({ min: 1 })
-      .withMessage("Please provide a first name."), // on error this message is sent.
+      .withMessage("Please provide a first name."),
 
     // lastname is required and must be string
     body("account_lastname")
@@ -22,7 +22,7 @@ validate.registationRules = () => {
       .escape()
       .notEmpty()
       .isLength({ min: 2 })
-      .withMessage("Please provide a last name."), // on error this message is sent.
+      .withMessage("Please provide a last name."),
 
     // valid email is required and cannot already exist in the database
     body("account_email")
@@ -136,7 +136,7 @@ validate.newAccountRules = () => {
       .escape()
       .notEmpty()
       .isLength({ min: 1 })
-      .withMessage("Please provide a first name."),
+      .withMessage("Please provide a valid first name."),
 
     // lastname is required and must be string
     body("account_lastname")
@@ -144,7 +144,7 @@ validate.newAccountRules = () => {
       .escape()
       .notEmpty()
       .isLength({ min: 2 })
-      .withMessage("Please provide a last name."),
+      .withMessage("Please provide a valid last name."),
 
     // valid email is required and cannot already exist in the database
     body("account_email")
@@ -158,7 +158,7 @@ validate.newAccountRules = () => {
           throw new Error("Email exists. Please log in or use different email")
         }
       }),
-  ];
+  ]
 }
 
 /* ******************************
@@ -178,8 +178,9 @@ validate.passwordValidationRules = () => {
         minSymbols: 1,
       })
       .withMessage("Password must be at least 8 characters and contain 1 uppercase, 1 number, and 1 symbol."),
-  ];
+  ]
 }
+
 /* ******************************
  * Check account data and return errors
  * ***************************** */
@@ -188,16 +189,21 @@ validate.checkUpdateData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     const nav = await utilities.getNav();
     const { account_id, account_firstname, account_lastname, account_email } = req.body;
-    res.status(400).render("account/update", {
+
+    // Collect all error messages into an array
+    const formErrors = errors.array().map((error) => error.msg);
+
+    res.status(400).render("account/update-account", {
       title: "Update Account Information",
       nav,
       messages: req.flash("notice"),
-      errors: errors.array(),
+      formErrors,
       account_id,
       account_firstname,
       account_lastname,
       account_email,
     });
+    console.log("Errors:", errors.array());
     return;
   }
   next();

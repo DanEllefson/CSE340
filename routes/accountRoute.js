@@ -70,6 +70,7 @@ router.post(
 router.post(
   "/update-password",
   regValidate.passwordValidationRules(),
+  regValidate.checkUpdateData,
   utilities.handleErrors(accountController.processUpdatePassword)
 );
 

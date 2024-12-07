@@ -187,8 +187,7 @@ async function buildUpdateAccountView(req, res) {
  *  Process Update Account Form
  * ************************************ */
 async function processUpdateAccount(req, res) {
-  const { account_firstname, account_lastname, account_email, account_id } =
-    req.body;
+  const { account_firstname, account_lastname, account_email, account_id } = req.body;
 
   const updateResult = await accountModel.updateAccount(
     account_firstname,
@@ -205,7 +204,7 @@ async function processUpdateAccount(req, res) {
     return res.redirect("/account/");
   } else {
     req.flash("notice", "Account update failed. Please try again.");
-    return buildUpdateAccountView(req, res);
+    return res.redirect(`/account/update/${account_id}`);
   }
 }
 
@@ -257,16 +256,19 @@ async function getUpdateAccountView(req, res, next) {
     res.render("account/update-account", {
       title: "Update Account Information",
       nav,
+      messages: req.flash("notice"),
+      formErrors: [],
       account_id: accountData.account_id,
       account_firstname: accountData.account_firstname,
       account_lastname: accountData.account_lastname,
       account_email: accountData.account_email,
-      errors: null,
-      messages: req.flash("notice"),
     });
-  } catch (err) {
-    console.error("Error fetching account data:", err);
-    next(err);
+  } catch (error) {
+    console.error("Error fetching account data:", error.message);
+    res.status(500).render("error", {
+      title: "Server Error",
+      message: "An unexpected error occurred. Please try again later.",
+    });
   }
 };
 
