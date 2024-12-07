@@ -8,6 +8,7 @@ const regValidate = require('../utilities/account-validation')
 // Deliver Account Management View
 router.get(
   "/",
+  utilities.checkJWTToken,
   utilities.checkLogin,
   utilities.attachAccountData,
   utilities.handleErrors(accountController.buildAccountManagementView)
