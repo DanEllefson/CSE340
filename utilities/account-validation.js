@@ -125,4 +125,51 @@ validate.checkLoginData = async (req, res, next) => {
   next();
 };
 
+/* ******************************
+ * Validation rules for account update
+ * ***************************** */
+validate.newAccountRules = () => {
+  return [
+    body("account_firstname").isLength({ min: 1 }).trim().escape(),
+    body("account_lastname").isLength({ min: 1 }).trim().escape(),
+    body("account_email").isEmail().normalizeEmail(),
+  ];
+}
+
+/* ******************************
+ * Validation rules for password update
+ * ***************************** */
+validate.passwordValidationRules = () => {
+  return [
+    body("account_password")
+      .isStrongPassword()
+      .withMessage("Password must be at least 8 characters and contain 1 uppercase, 1 number, and 1 symbol.")
+      .trim()
+      .escape(),
+  ];
+}
+
+/* ******************************
+ * Check account data and return errors
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    const { account_id, account_firstname, account_lastname, account_email } = req.body;
+    res.status(400).render("account/update", {
+      title: "Update Account Information",
+      nav,
+      messages: req.flash("notice"),
+      errors: errors.array(),
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate

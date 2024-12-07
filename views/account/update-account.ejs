@@ -1,0 +1,33 @@
+<h1><%= title %></h1>
+
+<!-- Flash Messages -->
+<% if (typeof messages !== "undefined") { %>
+  <%- messages() %>
+<% } %>
+
+<!-- Account Update Form -->
+<section>
+  <h2>Update Account Information</h2>
+  <form action="/account/update" method="post">
+    <input type="hidden" name="account_id" value="<%= account_id %>" />
+    <label for="account_firstname">First Name:</label>
+    <input type="text" name="account_firstname" id="account_firstname" value="<%= account_firstname %>" required />
+    <label for="account_lastname">Last Name:</label>
+    <input type="text" name="account_lastname" id="account_lastname" value="<%= account_lastname %>" required />
+    <label for="account_email">Email:</label>
+    <input type="email" name="account_email" id="account_email" value="<%= account_email %>" required />
+    <button type="submit">Update Account</button>
+  </form>
+</section>
+
+<!-- Change Password Form -->
+<section>
+  <h2>Change Password</h2>
+  <form action="/account/update-password" method="post">
+    <input type="hidden" name="account_id" value="<%= account_id %>" />
+    <label for="account_password">New Password:</label>
+    <input type="password" name="account_password" id="account_password" required />
+    <p>Password must be at least 8 characters, contain 1 uppercase letter, 1 number, and 1 special character.</p>
+    <button type="submit">Update Password</button>
+  </form>
+</section>

@@ -162,4 +162,110 @@ async function buildAccountManagementView(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView };
+/* ****************************************
+ *  Deliver Update Account View
+ * ************************************ */
+async function buildUpdateAccountView(req, res) {
+  let nav = await utilities.getNav();
+  const { account_firstname, account_lastname, account_email, account_id } =
+    req.accountData || {};
+
+  res.render("account/update-account", {
+    title: "Update Account",
+    nav,
+    errors: null,
+    messages: req.flash.bind(req),
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id,
+  });
+}
+
+/* ****************************************
+ *  Process Update Account Form
+ * ************************************ */
+async function processUpdateAccount(req, res) {
+  const { account_firstname, account_lastname, account_email, account_id } =
+    req.body;
+
+  const updateResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id
+  );
+
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Account successfully updated for ${account_firstname} ${account_lastname}.`
+    );
+    return res.redirect("/account/");
+  } else {
+    req.flash("notice", "Account update failed. Please try again.");
+    return buildUpdateAccountView(req, res);
+  }
+}
+
+/* ****************************************
+ *  Process Update Password Form
+ * ************************************ */
+async function processUpdatePassword(req, res) {
+  const { account_password, account_id } = req.body;
+
+  // Validate and hash the password
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hashSync(account_password, 10);
+  } catch (error) {
+    req.flash("notice", "Password update failed. Please try again.");
+    return buildUpdateAccountView(req, res);
+  }
+
+  const passwordResult = await accountModel.updatePassword(
+    hashedPassword,
+    account_id
+  );
+
+  if (passwordResult) {
+    req.flash("notice", "Password successfully updated.");
+    return res.redirect("/account/");
+  } else {
+    req.flash("notice", "Password update failed. Please try again.");
+    return buildUpdateAccountView(req, res);
+  }
+}
+
+/* ****************************************
+ *  Deliver Update Account View
+ * ************************************ */
+async function getUpdateAccountView(req, res, next) {
+  const account_id = parseInt(req.params.id, 10);
+  if (!account_id) {
+    req.flash("error", "Invalid account ID.");
+    return res.status(404).render("error", { title: "Error 404", message: "Invalid account ID." });
+  }
+
+  try {
+    const accountData = await accountModel.getAccountById(account_id);
+    if (!accountData) {
+      return res.status(404).render("error", { title: "Error 404", message: "Account not found." });
+    }
+    let nav = await utilities.getNav();
+    res.render("account/update-account", {
+      title: "Update Account Information",
+      nav,
+      account_id: accountData.account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
+    });
+  } catch (err) {
+    console.error("Error fetching account data:", err);
+    next(err);
+  }
+};
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, 
+                   buildAccountManagementView, buildUpdateAccountView, processUpdateAccount, processUpdatePassword, getUpdateAccountView };

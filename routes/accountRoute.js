@@ -42,12 +42,35 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
-// Route to deliver the password reset view
+/* // Route to deliver the password reset view
 router.get(
   "/management",
   utilities.checkJWTToken,
   utilities.checkLogin,
   utilities.handleErrors(accountController.buildAccountManagementView)
+); */
+
+// Update Account Information Route
+router.get(
+  "/update/:id",
+  utilities.checkLogin,
+  utilities.attachAccountData,
+  utilities.handleErrors(accountController.getUpdateAccountView)
+);
+
+// Process Account Update Form
+router.post(
+  "/update",
+  regValidate.newAccountRules(),
+  regValidate.checkUpdateData,
+  utilities.handleErrors(accountController.processUpdateAccount)
+);
+
+// Process Update Password Form
+router.post(
+  "/update-password",
+  regValidate.passwordValidationRules(),
+  utilities.handleErrors(accountController.processUpdatePassword)
 );
 
 module.exports = router;
