@@ -375,6 +375,11 @@ footer a {
   color: #212529;
   border-radius: 5px;
   text-align: center;
+  display: none;
+}
+
+.flash-message:has(ul li) {
+  display: block; /* Only show when there are messages */
 }
 
 .register-link {
