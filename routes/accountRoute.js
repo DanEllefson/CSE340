@@ -42,14 +42,6 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
-/* // Route to deliver the password reset view
-router.get(
-  "/management",
-  utilities.checkJWTToken,
-  utilities.checkLogin,
-  utilities.handleErrors(accountController.buildAccountManagementView)
-); */
-
 // Update Account Information Route
 router.get(
   "/update/:id",
