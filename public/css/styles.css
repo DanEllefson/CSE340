@@ -604,6 +604,7 @@ input::placeholder {
 .form-container {
   max-width: 400px;
   margin: 0 auto;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -669,6 +670,7 @@ button {
 .account-management-container {
   max-width: 600px;
   margin: 0 auto;
+  margin-top: 20px;
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -694,6 +696,21 @@ button {
 .account-management-container p {
   font-size: 1.3em;
   margin-bottom: 20px;
+}
+
+#classificationList {
+  width: 200px;
+  height: 40px;
+  font-size: 15px;
+  display: block;
+}
+
+#manageInvClassification {
+  margin: 0 auto;
+}
+
+.management-container {
+  margin-top: 20px;
 }
 
 
