@@ -73,4 +73,18 @@ router.get(
   utilities.handleErrors(accountController.buildFavoritesPage)
 );
 
+// Add a favorite
+router.post(
+  "/favorites/:invId", 
+  utilities.checkLogin, 
+  utilities.handleErrors(accountController.addFavorite)
+);
+
+// Remove a favorite
+router.delete(
+  "/favorites/:invId", 
+  utilities.checkLogin, 
+  utilities.handleErrors(accountController.removeFavorite)
+);
+
 module.exports = router;

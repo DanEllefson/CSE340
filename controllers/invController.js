@@ -10,7 +10,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   try {
     const classification_id = req.params.classificationId;
     const data = await invModel.getInventoryByClassificationId(classification_id);
-    const grid = await utilities.buildClassificationGrid(data);
+    const grid = await utilities.buildClassificationGrid(data, res.locals.loggedin);
     const nav = await utilities.getNav();
     res.render("inventory/classification", {
       title: "Vehicle Classification",

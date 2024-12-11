@@ -132,5 +132,29 @@ async function getFavoritesByAccountId(accountId) {
   }
 }
 
+/* ******************************************
+ *  Add a favorite for a given account_id
+ * ******************************************/
+async function addFavorite(accountId, invId) {
+  const sql = `
+    INSERT INTO favorites (account_id, inv_id)
+    VALUES ($1, $2)
+    ON CONFLICT DO NOTHING;
+  `;
+  return db.query(sql, [accountId, invId]);
+};
+
+/* ******************************************
+ *  Remove a favorite for a given account_id
+ * ******************************************/
+async function removeFavorite(accountId, invId) {
+  const sql = `
+    DELETE FROM favorites
+    WHERE account_id = $1 AND inv_id = $2;
+  `;
+  return db.query(sql, [accountId, invId]);
+};
+
 module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, 
-                  updateAccount, updatePassword, getAccountById, getFavoritesByAccountId};
+                  updateAccount, updatePassword, getAccountById, getFavoritesByAccountId,
+                  addFavorite, removeFavorite};
