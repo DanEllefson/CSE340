@@ -146,16 +146,15 @@ Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
   } else {
-    req.flash("notice", "Please log in.")
+    req.flash("notice", "You must be logged in to access this page.")
     return res.redirect("/account/login")
   }
  }
 
-
  /* ****************************************
  *  Ensure account data is attached to the request
  * ************************************ */
- Util.attachAccountData = (req, res, next) =>{
+ Util.attachAccountData = (req, res, next) => {
    const token = req.cookies.jwt;
    if (!token) {
      req.accountData = null;
@@ -176,5 +175,5 @@ Util.checkLogin = (req, res, next) => {
      next();
    }
  }
- 
+
 module.exports = Util;

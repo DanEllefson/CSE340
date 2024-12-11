@@ -309,5 +309,30 @@ async function getUpdateAccountView(req, res, next) {
   }
 };
 
+/* *************************
+ *  Deliver Favorites View
+ * *************************/
+async function buildFavoritesPage(req, res, next) {
+  try {
+    const accountId = res.locals.accountData.account_id;
+    const favorites = await accountModel.getFavoritesByAccountId(accountId);
+    let nav = await utilities.getNav();
+    const messages = [];
+    if (favorites.length === 0) {
+      messages.push("No vehicles currently favorited.");
+    }
+    
+    res.render("account/favorites", {
+      title: "My Favorites",
+      nav: nav,
+      favorites: favorites,
+      messages: messages,
+    });
+  } catch (error) {
+    console.error("Error building favorites page:", error);
+    next(error);
+  }
+}
+
 module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, 
-                   buildAccountManagementView, buildUpdateAccountView, processUpdateAccount, processUpdatePassword, getUpdateAccountView };
+                   buildAccountManagementView, buildUpdateAccountView, processUpdateAccount, processUpdatePassword, getUpdateAccountView, buildFavoritesPage };

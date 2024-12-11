@@ -66,4 +66,11 @@ router.post(
   utilities.handleErrors(accountController.processUpdatePassword)
 );
 
+// Process the Favorites page
+router.get(
+  "/favorites",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildFavoritesPage)
+);
+
 module.exports = router;

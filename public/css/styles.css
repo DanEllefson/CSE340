@@ -714,6 +714,42 @@ button {
 }
 
 
+
+
+
+/*********************/
+/* Favorites View    */
+/*********************/
+/* Base Link Styles for Header Links */
+.header-link {
+  font-weight: bold;
+  color: #0056b3;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
+}
+
+.header-link:hover {
+  text-decoration: underline;
+  color: #003f88;
+}
+
+/* Specific Link Adjustments */
+.favorites-link {
+  margin-right: 10px;
+}
+
+.logout-link {
+  margin-left: 10px;
+}
+
+.login-link {
+  margin-left: 10px;
+}
+
+
+
+
+
 /********************************/
 /* Viewport for larger screens  */
 /********************************/

@@ -110,5 +110,27 @@ async function getAccountById(accountId) {
   }
 }
 
+/* ******************************************
+ *  Get all favorites for a given account_id
+ * ******************************************/
+async function getFavoritesByAccountId(accountId) {
+  const sql = `
+    SELECT f.favorite_id, f.account_id, f.inv_id, 
+           i.inv_make, i.inv_model, i.inv_year, 
+           i.inv_thumbnail, i.inv_price
+    FROM favorites f
+    JOIN inventory i ON f.inv_id = i.inv_id
+    WHERE f.account_id = $1;
+  `;
+
+  try {
+    const result = await pool.query(sql, [accountId]);
+    return result.rows;
+  } catch (error) {
+    console.error("Error fetching favorites:", error.message);
+    throw new Error("Error fetching favorites.");
+  }
+}
+
 module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, 
-                  updateAccount, updatePassword, getAccountById};
+                  updateAccount, updatePassword, getAccountById, getFavoritesByAccountId};
