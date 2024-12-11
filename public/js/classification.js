@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     icon.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      const invId = icon.dataset.id; // Get the inventory ID from the data attribute
-      const isFavorited = icon.src.includes("heart_solid"); // Determine if the vehicle is currently favorited
+      const invId = icon.dataset.id;
+      const isFavorited = icon.src.includes("heart_solid"); 
       const url = `/account/favorites/${invId}`;
       const method = isFavorited ? "DELETE" : "POST";
 
