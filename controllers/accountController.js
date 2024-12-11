@@ -334,5 +334,38 @@ async function buildFavoritesPage(req, res, next) {
   }
 }
 
+/* *************************
+ *  Add a Favorite
+ * *************************/
+async function addFavorite(req, res, next) {
+  try {
+    const { invId } = req.body; // Get vehicle ID from request body
+    const accountId = res.locals.accountData.account_id; // Get logged-in user's account ID
+
+    await accountModel.addFavorite(accountId, invId); // Add favorite to the database
+    res.status(200).json({ success: true, message: "Vehicle added to favorites." });
+  } catch (error) {
+    console.error("Error adding favorite:", error);
+    res.status(500).json({ success: false, message: "Failed to add favorite." });
+  }
+}
+
+/* *************************
+ *  Remove a Favorite
+ * *************************/
+async function deleteFavorite(req, res, next) {
+  try {
+    const { invId } = req.body; // Get vehicle ID from request body
+    const accountId = res.locals.accountData.account_id; // Get logged-in user's account ID
+
+    await accountModel.removeFavorite(accountId, invId); // Remove favorite from the database
+    res.status(200).json({ success: true, message: "Vehicle removed from favorites." });
+  } catch (error) {
+    console.error("Error removing favorite:", error);
+    res.status(500).json({ success: false, message: "Failed to remove favorite." });
+  }
+}
+
 module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, 
-                   buildAccountManagementView, buildUpdateAccountView, processUpdateAccount, processUpdatePassword, getUpdateAccountView, buildFavoritesPage };
+                   buildAccountManagementView, buildUpdateAccountView, processUpdateAccount, processUpdatePassword, getUpdateAccountView, buildFavoritesPage,
+                   addFavorite, deleteFavorite };

@@ -29,41 +29,35 @@ Util.getNav = async function (req, res, next) {
 /* *************************************
 * Build the classification view HTML
 * ************************************ */
-Util.buildClassificationGrid = async function (data, loggedin) {
-  let grid = "";
+Util.buildClassificationGrid = async function (data) {
+  let grid = ""; // Initialize grid to an empty string
   if (data.length > 0) {
-      grid = '<ul id="inv-display">';
-      data.forEach(vehicle => {
-          grid += '<li>';
-          grid += `<a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+    grid = '<ul id="inv-display">';
+    data.forEach((vehicle) => {
+      grid += '<li>';
+      grid += `<a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
               <img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors" /></a>`;
-          grid += '<div class="namePrice">';
-          grid += '<hr />';
-          grid += '<h3>';
-          grid += `<a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+      grid += '<div class="namePrice">';
+      grid += '<hr />';
+      grid += '<h3>';
+      grid += `<a href="../../inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
               ${vehicle.inv_make} ${vehicle.inv_model}</a>`;
-          grid += '</h3>';
-          grid += `<span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</span>`;
-          grid += '</div>';
-          
-          // Add heart icon for logged-in users
-          if (loggedin) {
-              grid += `
-                <div class="favorite-icon">
-                  <img 
-                    src="/images/site/heart_border.png" 
-                    class="heart-icon" 
-                    data-inv-id="${vehicle.inv_id}" 
-                    alt="Favorite Icon" 
-                  />
-                </div>`;
-          }
+      grid += '</h3>';
+      grid += `<span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</span>`;
 
-          grid += '</li>';
-      });
-      grid += '</ul>';
-  } else { 
-      grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+      // Add heart icon based on isFavorited
+      grid += '<div class="favorite-icon">';
+      grid += vehicle.isFavorited
+        ? `<img src="/images/site/heart_solid.png" alt="Remove from favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`
+        : `<img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`;
+      grid += '</div>';
+
+      grid += '</div>';
+      grid += '</li>';
+    });
+    grid += '</ul>';
+  } else {
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>';
   }
   return grid;
 };

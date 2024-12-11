@@ -84,7 +84,7 @@ router.post(
 router.delete(
   "/favorites/:invId", 
   utilities.checkLogin, 
-  utilities.handleErrors(accountController.removeFavorite)
+  utilities.handleErrors(accountController.deleteFavorite)
 );
 
 module.exports = router;
