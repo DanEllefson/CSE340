@@ -339,11 +339,15 @@ async function buildFavoritesPage(req, res, next) {
  * *************************/
 async function addFavorite(req, res, next) {
   try {
-    const { invId } = req.body; // Get vehicle ID from request body
-    const accountId = res.locals.accountData.account_id; // Get logged-in user's account ID
+    const accountId = res.locals.accountData.account_id;
+    const invId = req.params.invId;
 
-    await accountModel.addFavorite(accountId, invId); // Add favorite to the database
+    if (!accountId || !invId) {
+      throw new Error("Account ID or Inventory ID is missing");
+    }
+    await accountModel.addFavorite(accountId, invId); 
     res.status(200).json({ success: true, message: "Vehicle added to favorites." });
+
   } catch (error) {
     console.error("Error adding favorite:", error);
     res.status(500).json({ success: false, message: "Failed to add favorite." });
@@ -355,11 +359,15 @@ async function addFavorite(req, res, next) {
  * *************************/
 async function deleteFavorite(req, res, next) {
   try {
-    const { invId } = req.body; // Get vehicle ID from request body
-    const accountId = res.locals.accountData.account_id; // Get logged-in user's account ID
+    const accountId = res.locals.accountData.account_id;
+    const invId = req.params.invId;
 
+    if (!accountId || !invId) {
+      throw new Error("Account ID or Inventory ID is missing");
+    }
     await accountModel.removeFavorite(accountId, invId); // Remove favorite from the database
     res.status(200).json({ success: true, message: "Vehicle removed from favorites." });
+    
   } catch (error) {
     console.error("Error removing favorite:", error);
     res.status(500).json({ success: false, message: "Failed to remove favorite." });

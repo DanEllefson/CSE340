@@ -45,11 +45,15 @@ Util.buildClassificationGrid = async function (data) {
       grid += '</h3>';
       grid += `<span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</span>`;
 
-      // Add heart icon based on isFavorited
+      // Add heart icon with onclick event
       grid += '<div class="favorite-icon">';
       grid += vehicle.isFavorited
-        ? `<img src="/images/site/heart_solid.png" alt="Remove from favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`
-        : `<img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`;
+  ? `<a href="#" onclick="toggleFavorite(event, ${vehicle.inv_id}, true)">
+       <img src="/images/site/heart_solid.png" alt="Remove from favorites" class="heart-icon" data-id="${vehicle.inv_id}" />
+     </a>`
+  : `<a href="#" onclick="toggleFavorite(event, ${vehicle.inv_id}, false)">
+       <img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />
+     </a>`;
       grid += '</div>';
 
       grid += '</div>';

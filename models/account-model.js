@@ -141,8 +141,13 @@ async function addFavorite(accountId, invId) {
     VALUES ($1, $2)
     ON CONFLICT DO NOTHING;
   `;
-  return db.query(sql, [accountId, invId]);
-};
+  if (!accountId || !invId) {
+    throw new Error("Account ID or Inventory ID is missing");
+  }
+
+  return await pool.query(sql, [accountId, invId]);
+}
+
 
 /* ******************************************
  *  Remove a favorite for a given account_id
@@ -152,7 +157,11 @@ async function removeFavorite(accountId, invId) {
     DELETE FROM favorites
     WHERE account_id = $1 AND inv_id = $2;
   `;
-  return db.query(sql, [accountId, invId]);
+  if (!accountId || !invId) {
+    throw new Error("Account ID or Inventory ID is missing  ");
+  }
+
+  return await pool.query(sql, [accountId, invId]);
 };
 
 module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, 
