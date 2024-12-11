@@ -164,6 +164,19 @@ async function removeFavorite(accountId, invId) {
   return await pool.query(sql, [accountId, invId]);
 };
 
+/* ******************************************
+ *  Remove a favorite for a given account_id
+ * ******************************************/
+async function isVehicleFavorited(accountId, invId) {
+  const sql = `
+    SELECT COUNT(*) 
+    FROM favorites 
+    WHERE account_id = $1 AND inv_id = $2;
+  `;
+  const result = await pool.query(sql, [accountId, invId]);
+  return parseInt(result.rows[0].count, 10) > 0;
+}
+
 module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, 
                   updateAccount, updatePassword, getAccountById, getFavoritesByAccountId,
-                  addFavorite, removeFavorite};
+                  addFavorite, removeFavorite, isVehicleFavorited};

@@ -45,15 +45,11 @@ Util.buildClassificationGrid = async function (data) {
       grid += '</h3>';
       grid += `<span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</span>`;
 
-      // Add heart icon with onclick event
+      // Add heart icon without onclick
       grid += '<div class="favorite-icon">';
       grid += vehicle.isFavorited
-  ? `<a href="#" onclick="toggleFavorite(event, ${vehicle.inv_id}, true)">
-       <img src="/images/site/heart_solid.png" alt="Remove from favorites" class="heart-icon" data-id="${vehicle.inv_id}" />
-     </a>`
-  : `<a href="#" onclick="toggleFavorite(event, ${vehicle.inv_id}, false)">
-       <img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />
-     </a>`;
+        ? `<img src="/images/site/heart_solid.png" alt="Remove from favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`
+        : `<img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`;
       grid += '</div>';
 
       grid += '</div>';
@@ -69,7 +65,7 @@ Util.buildClassificationGrid = async function (data) {
 /* ***************************
  *  Build Vehicle Detail View HTML
  * ************************** */
-Util.buildVehicleDetailView = function (vehicleData) {
+Util.buildVehicleDetailView = function (vehicleData, isFavorited) {
   const make = vehicleData.inv_make || "Unknown Make";
   const model = vehicleData.inv_model || "Unknown Model";
   const year = vehicleData.inv_year || "Unknown Year";
@@ -78,6 +74,10 @@ Util.buildVehicleDetailView = function (vehicleData) {
   const color = vehicleData.inv_color || "Color not available";
   const description = vehicleData.inv_description || "No description available.";
   const imageFull = vehicleData.inv_image || "/images/no-image.png"; // Default image
+
+  // Determine button text and class based on favorited status
+  const buttonText = isFavorited ? "Favorited!" : "Not Favorited";
+  const buttonClass = isFavorited ? "favorite-button favorited" : "favorite-button not-favorited";
 
   return `
     <div class="vehicle-detail">
@@ -90,6 +90,11 @@ Util.buildVehicleDetailView = function (vehicleData) {
           <p><strong>Mileage:</strong> ${mileage}</p>
           <p><strong>Color:</strong> ${color}</p>
           <p><strong>Description:</strong> ${description}</p>
+          ${
+            isFavorited !== undefined
+              ? `<button class="${buttonClass}" id="favorite-button" data-id="${vehicleData.inv_id}">${buttonText}</button>`
+              : ""
+          }
         </div>
       </div>
     </div>

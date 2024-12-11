@@ -52,19 +52,27 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *******************************/
 invCont.buildDetailByInventoryId = async function (req, res, next) {
   try {
-    const inventoryId = req.params.inventoryId;
-    const vehicleData = await invModel.getInventoryById(inventoryId);
+    const invId = req.params.inventoryId;
+    const vehicleData = await invModel.getInventoryById(invId);
     if (!vehicleData) {
       return res.status(404).send("Vehicle not found.");
     }
-    const detailViewHTML = await utilities.buildVehicleDetailView(vehicleData);
+
+    let isFavorited;
+    if (res.locals.loggedin) {
+      isFavorited = await accountModel.isVehicleFavorited(res.locals.accountData.account_id, invId);
+    }
+
+    const detailViewHTML = await utilities.buildVehicleDetailView(vehicleData, isFavorited);
     const nav = await utilities.getNav();
+
     res.render("inventory/detail", {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       nav,
       detailViewHTML,
     });
   } catch (error) {
+    console.error("Error building detail view:", error);
     next(error);
   }
 };
