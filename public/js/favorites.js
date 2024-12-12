@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ invId: invId }),
         });
-        console.log("Sent invId:", invId); // Debugging log
+        console.log("Sent invId:", invId);
         if (response.ok) {
           const parentElement = icon.closest("li");
           parentElement.remove(); // Remove the vehicle from the DOM
