@@ -1,36 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const heartIcons = document.querySelectorAll(".heart-icon");
-
-  heartIcons.forEach(icon => {
+  document.querySelectorAll(".heart-icon").forEach((icon) => {
     icon.addEventListener("click", async (event) => {
       event.preventDefault();
-      const heartIcon = event.target;
       const invId = icon.dataset.id;
-      const isFavorited = heartIcon.src.includes("heart_solid.png");
+      if (!invId) {
+        console.error("invId is undefined or invalid");
+      }
 
       try {
-        if (isFavorited) {
-          // Remove from favorites
-          const response = await fetch(`/account/favorites/${invId}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ invId: invId }),
-          });
-
-          if (!response.ok) {
-            throw new Error("Failed to remove vehicle from favorite table");
+        const response = await fetch(`/account/favorites/${invId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ invId: invId }),
+        });
+        console.log("Sent invId:", invId); // Debugging log
+        if (response.ok) {
+          const parentElement = icon.closest("li");
+          parentElement.remove(); // Remove the vehicle from the DOM
+          if (document.querySelectorAll("#inv-display li").length === 0) {
+            document.querySelector("#inv-display").innerHTML = `<p class="notice">No vehicles currently favorited.</p>`;
           }
-          
-          location.reload();
-          const result = await response.json();
-          console.log(result.message);
-
-          heartIcon.src = "/images/site/heart_border.png";
         } else {
-          console.log("Error: heart icon is not solid in favorites view");
+          console.error("Failed to remove favorite");
         }
       } catch (error) {
-        console.error("Error updating favorite status:", error);
+        console.error("Error removing favorite:", error);
       }
     });
   });
