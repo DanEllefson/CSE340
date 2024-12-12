@@ -340,7 +340,7 @@ async function buildFavoritesPage(req, res, next) {
 async function addFavorite(req, res, next) {
   try {
     const accountId = res.locals.accountData.account_id;
-    const invId = parseInt(req.body.invId, 10); // Ensure invId is parsed as an integer
+    const invId = parseInt(req.body.invId, 10);
     if (isNaN(invId)) {
       throw new Error("Invalid invId received");
     }
@@ -365,7 +365,7 @@ async function addFavorite(req, res, next) {
 async function deleteFavorite(req, res, next) {
   try {
     const accountId = res.locals.accountData.account_id;
-    const invId = parseInt(req.body.invId, 10); // Ensure invId is parsed as an integer
+    const invId = parseInt(req.body.invId, 10);
     if (isNaN(invId)) {
       throw new Error("Invalid invId received");
     }
@@ -375,7 +375,7 @@ async function deleteFavorite(req, res, next) {
     if (!accountId || !invId) {
       throw new Error("Account ID or Inventory ID is missing");
     }
-    await accountModel.removeFavorite(accountId, invId); // Remove favorite from the database
+    await accountModel.removeFavorite(accountId, invId);
     res.status(200).json({ success: true, message: "Vehicle removed from favorites." });
 
   } catch (error) {

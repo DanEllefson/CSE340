@@ -29,8 +29,8 @@ Util.getNav = async function (req, res, next) {
 /* *************************************
 * Build the classification view HTML
 * ************************************ */
-Util.buildClassificationGrid = async function (data) {
-  let grid = ""; // Initialize grid to an empty string
+Util.buildClassificationGrid = async function (data, loggedIn) {
+  let grid = "";
   if (data.length > 0) {
     grid = '<ul id="inv-display">';
     data.forEach((vehicle) => {
@@ -44,14 +44,12 @@ Util.buildClassificationGrid = async function (data) {
               ${vehicle.inv_make} ${vehicle.inv_model}</a>`;
       grid += '</h3>';
       grid += `<span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</span>`;
-
-      // Add heart icon without onclick
       grid += '<div class="favorite-icon">';
-      grid += vehicle.isFavorited
+      grid += loggedIn ?
+        vehicle.isFavorited
         ? `<img src="/images/site/heart_solid.png" alt="Remove from favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`
-        : `<img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />`;
+        : `<img src="/images/site/heart_border.png" alt="Add to favorites" class="heart-icon" data-id="${vehicle.inv_id}" />` : "";
       grid += '</div>';
-
       grid += '</div>';
       grid += '</li>';
     });
