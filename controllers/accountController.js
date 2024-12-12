@@ -316,16 +316,20 @@ async function buildFavoritesPage(req, res, next) {
   try {
     const accountId = res.locals.accountData.account_id;
     const favorites = await accountModel.getFavoritesByAccountId(accountId);
-    let nav = await utilities.getNav();
     const messages = [];
     if (favorites.length === 0) {
       messages.push("No vehicles currently favorited.");
     }
     
+    // Build the favorites grid
+    const grid = await utilities.buildFavoritesGrid(favorites, res.locals.loggedin);
+    const nav = await utilities.getNav();
+
+    // Render the favorites page
     res.render("account/favorites", {
       title: "My Favorites",
       nav: nav,
-      favorites: favorites,
+      grid,
       messages: messages,
     });
   } catch (error) {
