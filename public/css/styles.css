@@ -262,7 +262,7 @@ footer a {
 /********************************/
 #inv-display li {
   max-width: 280px;
-  max-height: 400px;
+  max-height: 420px;
   margin: 0 auto 20px auto;
   border: 3px solid #9c9c9c;
   border-radius: 25px;
@@ -782,11 +782,6 @@ button {
   opacity: 0.9;
   transform: scale(1.05);
 }
-
-
-
-
-
 
 
 /********************************/
